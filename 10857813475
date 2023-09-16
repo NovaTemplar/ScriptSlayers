@@ -1,0 +1,151 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "ScriptSlayers", HidePremium = false, IntroText = "ScriptSlayers", SaveConfig = false, ConfigFolder = "ScriptSlayers"})
+
+OrionLib:MakeNotification({
+    Name = "ScriptSlayers",
+    Content = "ScriptSlayers On Top",
+    Image = "rbxassetid://4483345998",
+    Time = 5
+}) 
+
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+}) 
+
+local Section = MainTab:AddSection({
+    Name = "Main Section"
+})
+
+local OtherTab = Window:MakeTab({
+	Name = "Other's",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = OtherTab:AddSection({
+    Name = "Main Section"
+})
+
+local autoMergeEnabled = false
+local autoLiftEnabled = false
+local autoSpinWheelEnabled = false
+
+local function autoMerge()
+    while autoMergeEnabled do
+        local args = {
+            [1] = "Craft All"
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PetAction"):InvokeServer(unpack(args))
+
+        wait(0.03) -- Wait for 15 seconds before repeating the code
+    end
+end
+
+local function autoLift()
+    while autoLiftEnabled do
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Weight"):FireServer()
+
+        wait(0.03) -- Wait for 30 milliseconds (0.03 seconds) before repeating the code
+    end
+end
+
+local function autoSpinWheel()
+    while autoSpinWheelEnabled do
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Spin Wheel"):FireServer()
+
+        wait(1) -- Wait for 1 second (1000 milliseconds) before repeating the code
+    end
+end
+
+local function autoHatchEgg(selectedOption)
+    local args = {
+        [1] = selectedOption,
+        [2] = 1
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("HatchEgg"):InvokeServer(unpack(args))
+end
+
+OtherTab:AddButton({
+    Name = "Admin Cmd",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end
+})
+
+OtherTab:AddButton({
+    Name = "Exit",
+    Callback = function()
+        OrionLib:Destroy()
+    end
+})
+
+MainTab:AddButton({
+    Name = "Dupe Tool",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
+    end
+})
+
+MainTab:AddButton({
+    Name = "Equip Best",
+    Callback = function()
+        local args = {
+            [1] = "Equip Best"
+        }
+        
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("PetAction"):InvokeServer(unpack(args))
+    end
+})
+
+MainTab:AddToggle({
+    Name = "Auto Merge",
+    Default = false,
+    Callback = function(Value)
+        autoMergeEnabled = Value
+        if autoMergeEnabled then
+            autoMerge() -- Start the autoMerge function
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Auto Lift",
+    Default = false,
+    Callback = function(Value)
+        autoLiftEnabled = Value
+        if autoLiftEnabled then
+            autoLift() -- Start the autoLift function
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Auto Spin Wheel",
+    Default = false,
+    Callback = function(Value)
+        autoSpinWheelEnabled = Value
+        if autoSpinWheelEnabled then
+            autoSpinWheel() -- Start the autoSpinWheel function
+        end
+    end    
+})
+
+MainTab:AddDropdown({
+    Name = "Buy Egg", -- Dropdown with options to select
+    Default = "Basic", -- Default selection
+    Options = {"Basic", "Forest"}, -- Options in the dropdown
+    Callback = function(Value)
+        if Value == "Basic" then
+            autoHatchEgg("Basic") -- Run the specified code for "Basic"
+        elseif Value == "Forest" then
+            autoHatchEgg("Forest") -- Run the specified code for "Forest"
+        end
+    end    
+})
+
+OrionLib:Init()
