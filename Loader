@@ -1,6 +1,6 @@
 local id = game.PlaceId
 
-local supported = { 5293755937, 10857813475 }
+local supported = { 5293755937, 10857813475, 13330775248 }
 
 if table.find(supported, id) then
   loadstring(game:HttpGet('https://raw.githubusercontent.com/NovaTemplar/nova-speed-simulator/main/'..id))()
