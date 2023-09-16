@@ -46,7 +46,6 @@ local function autoBuyWheel()
          [1] = "Silly Icecream",
          [2] = false
         }
-
         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CanBuyEgg"):InvokeServer(unpack(args))
 
         wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
@@ -79,11 +78,11 @@ MainTab:AddToggle({
 })
 
 MainTab:AddToggle({
-    Name = "Buy Silly-Icecream(DUPE)",
+    Name = "Dupe Silly-Icecream(Bypass)",
     Default = false,
     Callback = function(Value)
-        autoSpinWheelEnabled = Value
-        if autoSpinWheelEnabled then
+        autoBuyEnabled = Value
+        if autoBuyEnabled then
             autoBuyWheel() -- Start the autoSpinWheel function
         end
     end    
