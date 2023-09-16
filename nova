@@ -31,12 +31,21 @@ local Section = OtherTab:AddSection({
 
 local autoSpinWheelEnabled = false
 local autoBuyEnabled = false
+local autoRebirthEnabled = false
 
 local function autoSpinWheel()
     while autoSpinWheelEnabled do
         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AddSpeed"):FireServer()
 
         wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
+    end
+end
+
+local function autoRebirth()
+     while autoRebirthEnabled do
+         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Rebirth"):FireServer()
+
+         wait(1)
     end
 end
 
@@ -67,7 +76,7 @@ MainTab:AddButton({
 })
 
 MainTab:AddToggle({
-    Name = "Auto Click",
+    Name = "Fast Auto Click(Bypassed)",
     Default = false,
     Callback = function(Value)
         autoSpinWheelEnabled = Value
@@ -78,7 +87,18 @@ MainTab:AddToggle({
 })
 
 MainTab:AddToggle({
-    Name = "Dupe Silly-Icecream(Bypass)",
+    Name = "Auto Rebirth",
+    Default = false,
+    Callback = function(Value)
+        autoRebirthEnabled = Value
+        if autoRebirthEnabled then
+            autoRebirth()() -- Start the autoSpinWheel function
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Dupe Silly-Icecream(Bypassed)",
     Default = false,
     Callback = function(Value)
         autoBuyEnabled = Value
