@@ -1,6 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
-local Window = OrionLib:MakeWindow({Name = "ScriptSlayers", HidePremium = false, SaveConfig = true, ConfigFolder = "ScriptSlayers"})
+local Window = OrionLib:MakeWindow({Name = "ScriptSlayers - By Nova", IntroText = "ScriptSlayers", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
 
 OrionLib:MakeNotification({
     Name = "Script By Nova",
@@ -36,7 +36,7 @@ local function autoSpinWheel()
     while autoSpinWheelEnabled do
         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AddSpeed"):FireServer()
 
-        wait(1) -- Wait for 1 second (1000 milliseconds) before repeating the code
+        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
     end
 end
 
