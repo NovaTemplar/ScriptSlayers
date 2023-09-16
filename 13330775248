@@ -29,46 +29,14 @@ local Section = OtherTab:AddSection({
     Name = "Main Section"
 })
 
-local autoSpinWheelEnabled = false
+local autoClickEnabled = false
 local autoBuyEnabled = false
 local autoBuyEnabled1 = false
 local autoRebirthEnabled = false
 
-local function autoSpinWheel()
-    while autoSpinWheelEnabled do
-        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AddSpeed"):FireServer()
-
-        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
-    end
-end
-
-local function autoRebirth()
-     while autoRebirthEnabled do
-         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Rebirth"):FireServer()
-
-         wait(1)
-    end
-end
-
-local function autoBuyWheel()
-    while autoBuyEnabled do
-        local args = {
-         [1] = "Silly Icecream",
-         [2] = false
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CanBuyEgg"):InvokeServer(unpack(args))
-
-        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
-    end
-end
-
-local function autoBuyWheel1()
-    while autoBuyEnabled1 do
-        local args = {
-         [1] = "Earth Butterfly",
-         [2] = false
-        }
-        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CanBuyEgg"):InvokeServer(unpack(args))
+local function autoClick()
+    while autoClickEnabled do
+        game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("ClickService"):WaitForChild("RF"):WaitForChild("Click"):InvokeServer()
 
         wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
     end
@@ -89,49 +57,14 @@ MainTab:AddButton({
 })
 
 MainTab:AddToggle({
-    Name = "Fast Auto Click(Bypassed)",
+    Name = "Auto Clicker",
     Default = false,
     Callback = function(Value)
-        autoSpinWheelEnabled = Value
-        if autoSpinWheelEnabled then
-            autoSpinWheel() -- Start the autoSpinWheel function
+        autoClickEnabled = Value
+        if autoClickEnabled then
+            autoClick()
         end
     end    
 })
-
-MainTab:AddToggle({
-    Name = "Auto Rebirth",
-    Default = false,
-    Callback = function(Value)
-        autoRebirthEnabled = Value
-        if autoRebirthEnabled then
-            autoRebirth()() -- Start the autoSpinWheel function
-        end
-    end    
-})
-
-MainTab:AddToggle({
-    Name = "Give Silly-Icecream (Bypassed)",
-    Default = false,
-    Callback = function(Value)
-        autoBuyEnabled = Value
-        if autoBuyEnabled then
-            autoBuyWheel() -- Start the autoSpinWheel function
-        end
-    end    
-})
-
-MainTab:AddToggle({
-    Name = "Give Earth-Butterfly (Bypassed)",
-    Default = false,
-    Callback = function(Value)
-        autoBuyEnabled1 = Value
-        if autoBuyEnabled1 then
-            autoBuyWheel1() -- Start the autoSpinWheel function
-        end
-    end    
-})
-
-
 
 OrionLib:Init()
