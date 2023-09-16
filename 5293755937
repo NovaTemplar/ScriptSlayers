@@ -88,6 +88,24 @@ MainTab:AddButton({
     end
 })
 
+MainTab:AddButton({
+    Name = "Collect All Orbs",
+    Callback = function()
+        while Wait() do
+        local orbs = game:GetService("Workspace").GameAssets.GlobalAssets.OrbSpawns
+        for i, v in pairs(orbs:GetChildren()) do
+        if v:IsA("MeshPart") then
+        local user = game.Players.LocalPlayer.Character.Head
+        firetouchinterest(user, v, 0)
+        elseif v:IsA("Model") then
+        local summerOrb = v["Orb.1"]
+        firetouchinterest(game.Players.LocalPlayer.Character.Head, summerOrb, 0)
+        end
+        end
+        end
+    end
+})
+
 MainTab:AddToggle({
     Name = "Fast Auto Click(Bypassed)",
     Default = false,
