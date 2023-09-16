@@ -31,6 +31,7 @@ local Section = OtherTab:AddSection({
 
 local autoSpinWheelEnabled = false
 local autoBuyEnabled = false
+local autoBuyEnabled1 = false
 local autoRebirthEnabled = false
 
 local function autoSpinWheel()
@@ -53,6 +54,18 @@ local function autoBuyWheel()
     while autoBuyEnabled do
         local args = {
          [1] = "Silly Icecream",
+         [2] = false
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CanBuyEgg"):InvokeServer(unpack(args))
+
+        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
+    end
+end
+
+local function autoBuyWheel1()
+    while autoBuyEnabled1 do
+        local args = {
+         [1] = "Earth Butterfly",
          [2] = false
         }
         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CanBuyEgg"):InvokeServer(unpack(args))
@@ -98,7 +111,7 @@ MainTab:AddToggle({
 })
 
 MainTab:AddToggle({
-    Name = "Dupe Silly-Icecream(Bypassed)",
+    Name = "Give Silly-Icecream (Bypassed)",
     Default = false,
     Callback = function(Value)
         autoBuyEnabled = Value
@@ -107,6 +120,18 @@ MainTab:AddToggle({
         end
     end    
 })
+
+MainTab:AddToggle({
+    Name = "Give Earth-Butterfly (Bypassed)",
+    Default = false,
+    Callback = function(Value)
+        autoBuyEnabled1 = Value
+        if autoBuyEnabled1 then
+            autoBuyWheel1() -- Start the autoSpinWheel function
+        end
+    end    
+})
+
 
 
 OrionLib:Init()
