@@ -1,0 +1,137 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "ScriptSlayers - By Nova", IntroText = "ScriptSlayers", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
+
+OrionLib:MakeNotification({
+    Name = "Script By Nova",
+    Content = "ScriptSlayers On Top",
+    Image = "rbxassetid://4483345998",
+    Time = 5
+}) 
+
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+}) 
+
+local Section = MainTab:AddSection({
+    Name = "Main Section"
+})
+
+local OtherTab = Window:MakeTab({
+	Name = "Other's",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = OtherTab:AddSection({
+    Name = "Main Section"
+})
+
+local autoSpinWheelEnabled = false
+local autoBuyEnabled = false
+local autoBuyEnabled1 = false
+local autoRebirthEnabled = false
+
+local function autoSpinWheel()
+    while autoSpinWheelEnabled do
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AddSpeed"):FireServer()
+
+        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
+    end
+end
+
+local function autoRebirth()
+     while autoRebirthEnabled do
+         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Rebirth"):FireServer()
+
+         wait(1)
+    end
+end
+
+local function autoBuyWheel()
+    while autoBuyEnabled do
+        local args = {
+         [1] = "Silly Icecream",
+         [2] = false
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CanBuyEgg"):InvokeServer(unpack(args))
+
+        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
+    end
+end
+
+local function autoBuyWheel1()
+    while autoBuyEnabled1 do
+        local args = {
+         [1] = "Earth Butterfly",
+         [2] = false
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CanBuyEgg"):InvokeServer(unpack(args))
+
+        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
+    end
+end
+
+OtherTab:AddButton({
+    Name = "Admin Cmd",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end
+})
+
+MainTab:AddButton({
+    Name = "Dupe Tool",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
+    end
+})
+
+MainTab:AddToggle({
+    Name = "Fast Auto Click(Bypassed)",
+    Default = false,
+    Callback = function(Value)
+        autoSpinWheelEnabled = Value
+        if autoSpinWheelEnabled then
+            autoSpinWheel() -- Start the autoSpinWheel function
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Auto Rebirth",
+    Default = false,
+    Callback = function(Value)
+        autoRebirthEnabled = Value
+        if autoRebirthEnabled then
+            autoRebirth()() -- Start the autoSpinWheel function
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Give Silly-Icecream (Bypassed)",
+    Default = false,
+    Callback = function(Value)
+        autoBuyEnabled = Value
+        if autoBuyEnabled then
+            autoBuyWheel() -- Start the autoSpinWheel function
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Give Earth-Butterfly (Bypassed)",
+    Default = false,
+    Callback = function(Value)
+        autoBuyEnabled1 = Value
+        if autoBuyEnabled1 then
+            autoBuyWheel1() -- Start the autoSpinWheel function
+        end
+    end    
+})
+
+
+
+OrionLib:Init()
