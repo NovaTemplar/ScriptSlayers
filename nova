@@ -1,0 +1,93 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "ScriptSlayers", HidePremium = false, SaveConfig = true, ConfigFolder = "ScriptSlayers"})
+
+OrionLib:MakeNotification({
+    Name = "Script By Nova",
+    Content = "ScriptSlayers On Top",
+    Image = "rbxassetid://4483345998",
+    Time = 5
+}) 
+
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+}) 
+
+local Section = MainTab:AddSection({
+    Name = "Main Section"
+})
+
+local OtherTab = Window:MakeTab({
+	Name = "Other's",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = OtherTab:AddSection({
+    Name = "Main Section"
+})
+
+local autoSpinWheelEnabled = false
+local autoBuyEnabled = false
+
+local function autoSpinWheel()
+    while autoSpinWheelEnabled do
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AddSpeed"):FireServer()
+
+        wait(1) -- Wait for 1 second (1000 milliseconds) before repeating the code
+    end
+end
+
+local function autoBuyWheel()
+    while autoBuyEnabled do
+        local args = {
+         [1] = "Silly Icecream",
+         [2] = false
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CanBuyEgg"):InvokeServer(unpack(args))
+
+        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
+    end
+end
+
+OtherTab:AddButton({
+    Name = "Admin Cmd",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end
+})
+
+MainTab:AddButton({
+    Name = "Dupe Tool",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
+    end
+})
+
+MainTab:AddToggle({
+    Name = "Auto Click",
+    Default = false,
+    Callback = function(Value)
+        autoSpinWheelEnabled = Value
+        if autoSpinWheelEnabled then
+            autoSpinWheel() -- Start the autoSpinWheel function
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Buy Silly-Icecream(DUPE)",
+    Default = false,
+    Callback = function(Value)
+        autoSpinWheelEnabled = Value
+        if autoSpinWheelEnabled then
+            autoBuyWheel() -- Start the autoSpinWheel function
+        end
+    end    
+})
+
+
+OrionLib:Init()
