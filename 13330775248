@@ -38,7 +38,7 @@ local function autoClick()
     while autoClickEnabled do
         game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.4.7"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("ClickService"):WaitForChild("RF"):WaitForChild("Click"):InvokeServer()
 
-        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
+        wait(0.5) -- Wait for 1 second (1000 milliseconds) before repeating the code
     end
 end
 
