@@ -8,12 +8,12 @@ for i, bases in pairs(workspace:GetChildren()) do
 end
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-
+local Player = game.Players.LocalPlayer
 local Window = OrionLib:MakeWindow({Name = "ScriptSlayers - By Nova", IntroText = "ScriptSlayers", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
 
 OrionLib:MakeNotification({
-    Name = "Script By Nova",
-    Content = "ScriptSlayers On Top",
+    Name = "You logged in!",
+    Content = "You logged in as"..Player.Name..".",
     Image = "rbxassetid://4483345998",
     Time = 5
 }) 
