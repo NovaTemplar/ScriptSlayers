@@ -20,7 +20,7 @@ OrionLib:MakeNotification({
 
 local MainTab = Window:MakeTab({
     Name = "Main",
-    Icon = "rbxassetid://14828042653",
+    Icon = "rbxassetid://14828079730",
     PremiumOnly = false
 }) 
 
@@ -30,7 +30,7 @@ local Section = MainTab:AddSection({
 
 local OtherTab = Window:MakeTab({
 	Name = "Other's",
-	Icon = "rbxassetid://4483345998",
+	Icon = "rbxassetid://14828080427",
 	PremiumOnly = false
 })
 
