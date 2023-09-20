@@ -65,8 +65,8 @@ MainTab:AddButton({
     Name = "Check Key",
     Callback = function(Value)
         if _G.KeyInput == _G.Key then
-        ScriptS()
         TrueKey()
+        ScriptS()
         OrionLib:Destroy()
         else
             FalseKey()
