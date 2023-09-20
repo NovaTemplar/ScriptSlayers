@@ -44,10 +44,10 @@ local function AutoRobBank()
     while AutoRob do
         for i, v in pairs(workspace:GetChildren()) do
             if v.Name == "Bank" and v.Purchases:FindFirstChild("MoneyTable") then
---found bank!
+
                 fireclickdetector(v.Purchases.MoneyTable.ClickArea.ClickDetector)
                 wait(0.2)
---now stash it like the come goblin you know you are
+
                 mybase.Purchases.Stash.Area.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
             end
         end
