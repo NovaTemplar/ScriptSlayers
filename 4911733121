@@ -61,7 +61,7 @@ OtherTab:AddButton({
     end
 })
 
-OtherTab:AddButton({
+MainTab:AddButton({
     Name = "Save Data",
     Callback = function()
         game:GetService("ReplicatedStorage"):WaitForChild("Save"):FireServer()
