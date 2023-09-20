@@ -20,7 +20,7 @@ OrionLib:MakeNotification({
 
 local MainTab = Window:MakeTab({
     Name = "Main",
-    Icon = "rbxassetid://4483345998",
+    Icon = "rbxassetid://14828042653",
     PremiumOnly = false
 }) 
 
