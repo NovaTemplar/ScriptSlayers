@@ -1,0 +1,77 @@
+for i,con in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
+con:Disable()
+end
+for i, bases in pairs(workspace:GetChildren()) do
+    if bases.Name == "Robber Base" and tostring(bases.Owner.Value) == game.Players.LocalPlayer.Name then
+        mybase = bases
+    end
+end
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "ScriptSlayers - By Nova", IntroText = "ScriptSlayers", IntroIcon = "✨", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
+
+OrionLib:MakeNotification({
+    Name = "Script By Nova",
+    Content = "ScriptSlayers On Top",
+    Image = "rbxassetid://4483345998",
+    Time = 5
+}) 
+
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+}) 
+
+local Section = MainTab:AddSection({
+    Name = "Main Section"
+})
+
+local OtherTab = Window:MakeTab({
+	Name = "Other's",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = OtherTab:AddSection({
+    Name = "Main Section"
+})
+
+local AutoRob = false
+
+local function AutoRobBank()
+    while AutoRob do
+        for i, v in pairs(workspace:GetChildren()) do
+            if v.Name == "Bank" and v.Purchases:FindFirstChild("MoneyTable") then
+--found bank!
+                fireclickdetector(v.Purchases.MoneyTable.ClickArea.ClickDetector)
+                wait(0.2)
+--now stash it like the come goblin you know you are
+                mybase.Purchases.Stash.Area.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            end
+        end
+    end
+end
+
+OtherTab:AddButton({
+    Name = "Admin Cmd",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end
+})
+
+MainTab:AddToggle({
+    Name = "Auto Rob",
+    Default = false,
+    Callback = function(Value)
+        autoBuyEnabled = Value
+        if autoBuyEnabled then
+            autoBuyWheel() -- Start the autoSpinWheel function
+        end
+    end    
+})
+
+
+
+OrionLib:Init()
