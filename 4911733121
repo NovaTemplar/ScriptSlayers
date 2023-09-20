@@ -65,9 +65,9 @@ MainTab:AddToggle({
     Name = "Auto Rob",
     Default = false,
     Callback = function(Value)
-        autoBuyEnabled = Value
-        if autoBuyEnabled then
-            autoBuyWheel() -- Start the autoSpinWheel function
+        AutoRob = Value
+        if AutoRob then
+            AutoRobBank()
         end
     end    
 })
