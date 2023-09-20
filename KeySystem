@@ -66,6 +66,7 @@ MainTab:AddButton({
     Callback = function(Value)
         if _G.KeyInput == _G.Key then
         TrueKey()
+        ScriptS()
         else
             FalseKey()
         end
