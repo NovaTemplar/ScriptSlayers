@@ -13,7 +13,7 @@ local Window = OrionLib:MakeWindow({Name = "ScriptSlayers - By Nova", IntroText 
 
 OrionLib:MakeNotification({
     Name = "You logged in!",
-    Content = "You logged in as"..Player.Name..".",
+    Content = "You logged in as "..Player.Name..".",
     Image = "rbxassetid://4483345998",
     Time = 5
 }) 
