@@ -61,6 +61,13 @@ OtherTab:AddButton({
     end
 })
 
+OtherTab:AddButton({
+    Name = "Exit",
+    Callback = function()
+        OrionLib:Destroy()
+    end
+})
+
 MainTab:AddButton({
     Name = "Save Data",
     Callback = function()
