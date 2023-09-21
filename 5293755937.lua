@@ -38,7 +38,7 @@ local function autoSpinWheel()
     while autoSpinWheelEnabled do
         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("AddSpeed"):FireServer()
 
-        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
+        wait(0.01)
     end
 end
 
@@ -58,7 +58,7 @@ local function autoBuyWheel()
         }
         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CanBuyEgg"):InvokeServer(unpack(args))
 
-        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
+        wait(0.01)
     end
 end
 
@@ -70,7 +70,7 @@ local function autoBuyWheel1()
         }
         game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CanBuyEgg"):InvokeServer(unpack(args))
 
-        wait(0.01) -- Wait for 1 second (1000 milliseconds) before repeating the code
+        wait(0.01)
     end
 end
 
@@ -112,7 +112,7 @@ MainTab:AddToggle({
     Callback = function(Value)
         autoSpinWheelEnabled = Value
         if autoSpinWheelEnabled then
-            autoSpinWheel() -- Start the autoSpinWheel function
+            autoSpinWheel()
         end
     end    
 })
@@ -123,7 +123,7 @@ MainTab:AddToggle({
     Callback = function(Value)
         autoRebirthEnabled = Value
         if autoRebirthEnabled then
-            autoRebirth()() -- Start the autoSpinWheel function
+            autoRebirth()()
         end
     end    
 })
@@ -134,7 +134,7 @@ MainTab:AddToggle({
     Callback = function(Value)
         autoBuyEnabled = Value
         if autoBuyEnabled then
-            autoBuyWheel() -- Start the autoSpinWheel function
+            autoBuyWheel()
         end
     end    
 })
@@ -145,7 +145,7 @@ MainTab:AddToggle({
     Callback = function(Value)
         autoBuyEnabled1 = Value
         if autoBuyEnabled1 then
-            autoBuyWheel1() -- Start the autoSpinWheel function
+            autoBuyWheel1()
         end
     end    
 })
