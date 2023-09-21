@@ -84,6 +84,13 @@ local function ESPALL()
     end
 end
 
+VTab:AddButton({
+    Name = "Bring Tool",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NovaTemplar/ScriptSlayers/main/Tp"))()
+    end
+})
+
 OtherTab:AddButton({
     Name = "Admin Cmd",
     Callback = function()
