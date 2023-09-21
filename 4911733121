@@ -88,6 +88,7 @@ MainTab:AddButton({
 VTab:AddButton({
     Name = "Esp",
     Callback = function()
+        while wait() do
         local players = game.Players:GetPlayers()
 
         for _, player in pairs(players) do
@@ -101,7 +102,7 @@ VTab:AddButton({
             highlight.OutlineColor = Color3.new(1, 1, 1)
 
             highlight.OutlineTransparency = 0
-
+        end
         end
     end
 })
