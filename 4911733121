@@ -64,6 +64,26 @@ local function AutoRobBank()
     end
 end
 
+local function ESPALL()
+    while Esp do
+        local players = game.Players:GetPlayers()
+
+            for _, player in pairs(players) do
+
+                local highlight = Instance.new("Highlight")
+
+                highlight.Parent = player.Character
+
+                highlight.Adornee = player.Character
+
+                highlight.OutlineColor = Color3.new(1, 1, 1)
+
+                highlight.OutlineTransparency = 0
+        wait(1)
+        end
+    end
+end
+
 OtherTab:AddButton({
     Name = "Admin Cmd",
     Callback = function()
@@ -85,26 +105,15 @@ MainTab:AddButton({
     end
 })
 
-VTab:AddButton({
+VTab:AddToggle({
     Name = "Esp",
-    Callback = function()
-        while wait() do
-        local players = game.Players:GetPlayers()
-
-        for _, player in pairs(players) do
-
-            local highlight = Instance.new("Highlight")
-
-            highlight.Parent = player.Character
-
-            highlight.Adornee = player.Character
-
-            highlight.OutlineColor = Color3.new(1, 1, 1)
-
-            highlight.OutlineTransparency = 0
+    Default = false,
+    Callback = function(Value)
+        Esp = Value
+        if Esp then
+            ESPALL()
         end
-        end
-    end
+    end    
 })
 
 MainTab:AddToggle({
