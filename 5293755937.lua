@@ -141,7 +141,7 @@ MainTab:AddButton({
         end
         end
 	end
-	end
+    end
 })
 
 MainTab:AddToggle({
