@@ -9,12 +9,12 @@ end
 
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Player = game.Players.LocalPlayer
-local Window = OrionLib:MakeWindow({Name = "ScriptSlayers - By Nova", IntroText = "ScriptSlayers", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
+local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
 
 OrionLib:MakeNotification({
     Name = "You logged in!",
     Content = "You logged in as "..Player.Name..".",
-    Image = "rbxassetid://4483345998",
+    Image = "rbxassetid://14836421904",
     Time = 5
 }) 
 
@@ -28,14 +28,24 @@ local Section = MainTab:AddSection({
     Name = "Main Section"
 })
 
-local OtherTab = Window:MakeTab({
-	Name = "Other's",
-	Icon = "rbxassetid://14828080427",
-	PremiumOnly = false
+local VTab = Window:MakeTab({
+	Name = "Visual",
+	Icon = "rbxassetid://14836534175",
+	PremiumOnly = true
 })
 
 local Section = OtherTab:AddSection({
-    Name = "Main Section"
+    Name = "Visual Section"
+})
+
+local OtherTab = Window:MakeTab({
+	Name = "Other's",
+	Icon = "rbxassetid://14828080427",
+	PremiumOnly = true
+})
+
+local Section = OtherTab:AddSection({
+    Name = "Others Section"
 })
 
 local AutoRob = false
@@ -72,6 +82,27 @@ MainTab:AddButton({
     Name = "Save Data",
     Callback = function()
         game:GetService("ReplicatedStorage"):WaitForChild("Save"):FireServer()
+    end
+})
+
+VTab:AddButton({
+    Name = "Esp",
+    Callback = function()
+        local players = game.Players:GetPlayers()
+
+        for _, player in pairs(players) do
+
+            local highlight = Instance.new("Highlight")
+
+            highlight.Parent = player.Character
+
+            highlight.Adornee = player.Character
+
+            highlight.OutlineColor = Color3.new(1, 1, 1)
+
+            highlight.OutlineTransparency = 0
+
+        end
     end
 })
 
