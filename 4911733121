@@ -34,7 +34,7 @@ local VTab = Window:MakeTab({
 	PremiumOnly = false
 })
 
-local Section = OtherTab:AddSection({
+local Section = VTab:AddSection({
     Name = "Visual Section"
 })
 
