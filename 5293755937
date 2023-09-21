@@ -12,7 +12,7 @@ OrionLib:MakeNotification({
 function RebirthNotification()
     OrionLib:MakeNotification({
         Name = "Hey "..Player.Name.."!",
-        Content = "Auto Rebirth Successfully Started.",
+        Content = "Auto Rebirth Successfully Stop.",
         Image = "rbxassetid://14836421904",
         Time = 5
     }) 
@@ -48,7 +48,7 @@ end
 function AutoClickNotification()
     OrionLib:MakeNotification({
         Name = "Hey "..Player.Name.."!",
-        Content = "Successfully Started Auto Clicking.",
+        Content = "Successfully Stop Auto Clicking.",
         Image = "rbxassetid://14836421904",
         Time = 5
     }) 
@@ -57,7 +57,7 @@ end
 function SillyIcecreamNotification()
     OrionLib:MakeNotification({
         Name = "Hey "..Player.Name.."!",
-        Content = "Successfully Started Giving Yourself Silly-Icecream Pet.",
+        Content = "Successfully Stop Giving Yourself Silly-Icecream Pet.",
         Image = "rbxassetid://14836421904",
         Time = 5
     }) 
@@ -66,7 +66,7 @@ end
 function EarthButterflyNotification()
     OrionLib:MakeNotification({
         Name = "Hey "..Player.Name.."!",
-        Content = "Successfully Started Giving Yourself Earth-Butterfly Pet.",
+        Content = "Successfully Stop Giving Yourself Earth-Butterfly Pet.",
         Image = "rbxassetid://14836421904",
         Time = 5
     }) 
