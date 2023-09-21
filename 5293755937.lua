@@ -45,6 +45,33 @@ function CollectAllOrbsNotification()
     }) 
 end
 
+function AutoClickNotification()
+    OrionLib:MakeNotification({
+        Name = "Hey "..Player.Name.."!",
+        Content = "Successfully Started Auto Clicking.",
+        Image = "rbxassetid://14836421904",
+        Time = 5
+    }) 
+end
+
+function SillyIcecreamNotification()
+    OrionLib:MakeNotification({
+        Name = "Hey "..Player.Name.."!",
+        Content = "Successfully Started Giving Yourself Silly-Icecream Pet.",
+        Image = "rbxassetid://14836421904",
+        Time = 5
+    }) 
+end
+
+function EarthButterflyNotification()
+    OrionLib:MakeNotification({
+        Name = "Hey "..Player.Name.."!",
+        Content = "Successfully Started Giving Yourself Earth-Butterfly Pet.",
+        Image = "rbxassetid://14836421904",
+        Time = 5
+    }) 
+end
+
 local MainTab = Window:MakeTab({
     Name = "Main",
     Icon = "rbxassetid://4483345998",
@@ -129,6 +156,7 @@ MainTab:AddButton({
 MainTab:AddButton({
     Name = "Collect All Orbs",
     Callback = function()
+	CollectAllOrbsNotification()
         while Wait() do
         local orbs = game:GetService("Workspace").GameAssets.GlobalAssets.OrbSpawns
         for i, v in pairs(orbs:GetChildren()) do
@@ -145,12 +173,13 @@ MainTab:AddButton({
 })
 
 MainTab:AddToggle({
-    Name = "Fast Auto Click(Bypassed)",
+    Name = "Fast Auto Click (Bypassed)",
     Default = false,
     Callback = function(Value)
         autoSpinWheelEnabled = Value
         if autoSpinWheelEnabled then
             autoSpinWheel()
+	    AutoClickNotification()
         end
     end    
 })
@@ -174,6 +203,7 @@ MainTab:AddToggle({
         autoBuyEnabled = Value
         if autoBuyEnabled then
             autoBuyWheel()
+	    SillyIcecreamNotification()
         end
     end    
 })
@@ -185,6 +215,7 @@ MainTab:AddToggle({
         autoBuyEnabled1 = Value
         if autoBuyEnabled1 then
             autoBuyWheel1()
+	    EarthButterflyNotification()
         end
     end    
 })
