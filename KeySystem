@@ -1,6 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Player = game.Players.LocalPlayer
-local Window = OrionLib:MakeWindow({Name = "ScriptSlayers - KeySystem", IntroText = "KeySystem", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
+local Window = OrionLib:MakeWindow({Name = "ScriptSlayer - KeySystem", IntroText = "KeySystem", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
 
 OrionLib:MakeNotification({
     Name = "Logged in!",
