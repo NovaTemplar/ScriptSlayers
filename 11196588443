@@ -69,6 +69,7 @@ local AutoMerge = false
 local zombieOptions = {"+1 Zombie", "+3 Zombies", "+10 Zombies", "+30 Zombies", "+50 Zombies", "+100 Zombies"}
 local selectedZombieOption = zombieOptions[1] -- Default selected option
 
+
 local function AutoInfSampleGet()
     while AutoInfSample do
         if AutoInfSample then
@@ -140,7 +141,7 @@ local function AddZombies()
                 v.CanCollide = false
                 firetouchinterest(v, hrp, 0)
                 firetouchinterest(v, hrp, 1)
-                wait(0.5)
+                task.wait(.5)
             end
         end
     end
@@ -215,6 +216,7 @@ MainTab:AddToggle({
     end    
 })
 
+MainTab:AddDropdown({
 MainTab:AddDropdown({
     Name = "Zombie Add",
     Default = selectedZombieOption,
