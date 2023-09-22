@@ -132,6 +132,19 @@ local function AutoMergeGet()
     end
 end
 
+local function AddZombies()
+    if BuyZombie then
+        for i, v in pairs(game:GetService("Workspace").Tycoon.Tycoons[yourtycoon]["Buttons_E"]:GetDescendants()) do
+            if v:IsA("MeshPart") and v.Parent.Name == zombies then
+                v.CanCollide = false
+                firetouchinterest(v, hrp, 0)
+                firetouchinterest(v, hrp, 1)
+                task.wait(.5)
+            end
+        end
+    end
+end
+
 OtherTab:AddButton({
     Name = "Admin Cmd",
     Callback = function()
@@ -207,31 +220,30 @@ MainTab:AddDropdown({
     Options = zombieOptions,
     Callback = function(Value)
         selectedZombieOption = Value
-        print("Selected Zombie Option: " .. selectedZombieOption)
+        if Value == "+1 Zombie" then
+            zombies = "Add"
+        elseif Value == "+3 Zombies" then
+            zombies = "Add3"
+        elseif Value == "+10 Zombies" then
+            zombies = "Add10"
+        elseif Value == "+30 Zombies" then
+            zombies = "Add30"
+        elseif Value == "+50 Zombies" then
+            zombies = "Add50"
+        elseif Value == "+100 Zombies" then
+            zombies = "Add100"
+        end
+        AddZombies() -- Call the function to add zombies when the option is changed
     end    
 })
-
-local zombies = ""
 
 MainTab:AddToggle({
     Name = "^ Auto Add",
     Default = false,
     Callback = function(Value)
         BuyZombie = Value
-        if BuyZombie then
-            if selectedZombieOption == "+1 Zombie" then
-                zombies = "Add"
-            elseif selectedZombieOption == "+3 Zombies" then
-                zombies = "Add3"
-            elseif selectedZombieOption == "+10 Zombies" then
-                zombies = "Add10"
-            elseif selectedZombieOption == "+30 Zombies" then
-                zombies = "Add30"
-            elseif selectedZombieOption == "+50 Zombies" then
-                zombies = "Add50"
-            elseif selectedZombieOption == "+100 Zombies" then
-                zombies = "Add100"
-            end
+        if Value then
+            AddZombies() -- Call the function to add zombies when the toggle is enabled
         end
     end
 })
