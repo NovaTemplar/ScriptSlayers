@@ -64,6 +64,7 @@ local AutoInfSample = false
 local AutoUpgrade = false
 local AutoCollect = false
 local AutoDep = false
+local AutoMerge = false
 
 local function AutoInfSampleGet()
     while AutoInfSample do
@@ -109,6 +110,21 @@ local function AutoDepGet()
         if AutoDep then
             game:GetService("ReplicatedStorage").Signals.RemoteEvents.PutRemote:FireServer()
             wait(0.3)  -- Adjust the delay as needed
+        end
+        wait()
+    end
+end
+
+local function AutoMergeGet()
+    while AutoMerge do
+        if AutoMerge then
+            local MergeButton = game:GetService("Workspace").Tycoon.Tycoons[yourtycoon]["Buttons_E"].Merge.Head
+            MergeButton.CanCollide = false
+
+            firetouchinterest(MergeButton, hrp, 0)
+            firetouchinterest(MergeButton, hrp, 1)
+
+            wait(3)  -- Adjust the delay as needed
         end
         wait()
     end
@@ -168,6 +184,17 @@ MainTab:AddToggle({
         AutoDep = Value
         if AutoDep then
             AutoDepGet()
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Auto Merge",
+    Default = false,
+    Callback = function(Value)
+        AutoMerge = Value
+        if AutoMerge then
+            AutoMergeGet()
         end
     end    
 })
