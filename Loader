@@ -1,6 +1,6 @@
 local id = game.PlaceId
 
-local supported = { 5293755937, 10857813475, 4911733121 }
+local supported = { 5293755937, 10857813475, 4911733121, 11196588443 }
 
 if table.find(supported, id) then
   loadstring(game:HttpGet('https://raw.githubusercontent.com/NovaTemplar/ScriptSlayers/main/KeySystem'))()
