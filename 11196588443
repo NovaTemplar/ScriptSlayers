@@ -65,7 +65,8 @@ local AutoUpgrade = false
 local AutoCollect = false
 local AutoDep = false
 local AutoMerge = false
-local zombies = "+1 Zombie"
+local zombieOptions = {"+1 Zombie", "+3 Zombies", "+10 Zombies", "+30 Zombies", "+50 Zombies", "+100 Zombies"}
+local selectedZombieOption = zombieOptions[1] -- Default selected option
 
 local function AutoInfSampleGet()
     while AutoInfSample do
@@ -200,36 +201,39 @@ MainTab:AddToggle({
     end    
 })
 
-b:Label("==============",{
-    TextSize = 25,
-    TextColor = Color3.fromRGB(255,255,255),
-    BgColor = Color3.fromRGB(69,69,69)
+MainTab:AddDropdown({
+    Name = "Zombie Add",
+    Default = selectedZombieOption,
+    Options = zombieOptions,
+    Callback = function(Value)
+        selectedZombieOption = Value
+        print("Selected Zombie Option: " .. selectedZombieOption)
+    end    
 })
 
-b:Toggle("^ Auto Add",function(bool)
-    getgenv().BuyZombie = bool
-    
-    task.spawn(function()
-        while task.wait() do
-            pcall(function()
-                
-                local char = lp.Character    
-                local hum = char.Humanoid
-                local hrp = char.HumanoidRootPart
-                
-                if BuyZombie then
-                    for i,v in pairs(game:GetService("Workspace").Tycoon.Tycoons[yourtycoon]["Buttons_E"]:GetDescendants()) do
-                        if v:IsA("MeshPart") and v.Parent.Name == zombies then
-                            v.CanCollide = false
-                            firetouchinterest(v, hrp, 0)
-                            firetouchinterest(v, hrp, 1)
-                            task.wait(.5)
-                        end
-                    end  
-                end
-            end)
+local zombies = ""
+
+MainTab:AddToggle({
+    Name = "^ Auto Add",
+    Default = false,
+    Callback = function(Value)
+        BuyZombie = Value
+        if BuyZombie then
+            if selectedZombieOption == "+1 Zombie" then
+                zombies = "Add"
+            elseif selectedZombieOption == "+3 Zombies" then
+                zombies = "Add3"
+            elseif selectedZombieOption == "+10 Zombies" then
+                zombies = "Add10"
+            elseif selectedZombieOption == "+30 Zombies" then
+                zombies = "Add30"
+            elseif selectedZombieOption == "+50 Zombies" then
+                zombies = "Add50"
+            elseif selectedZombieOption == "+100 Zombies" then
+                zombies = "Add100"
+            end
         end
-    end)
-end)
+    end
+})
 
 OrionLib:Init()
