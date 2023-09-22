@@ -61,6 +61,9 @@ local Section = OtherTab:AddSection({
 
 local AutoRob = false
 local AutoInfSample = false
+local AutoUpgrade = false
+local AutoCollect = false
+local AutoDep = false
 
 local function AutoInfSampleGet()
     while AutoInfSample do
@@ -69,6 +72,45 @@ local function AutoInfSampleGet()
             game:GetService("ReplicatedStorage").Signals.RemoteEvents.GetWoolRemote:FireServer(unpack(args))
         end
         wait()  -- Adjust the delay as needed
+    end
+end
+
+local function AutoUpgradeGet()
+    while AutoUpgrade do
+        if AutoUpgrade then
+            local UpgradeButton = game:GetService("Workspace").Tycoon.Tycoons[yourtycoon]["Buttons_E"].Upgrade.Head
+            UpgradeButton.CanCollide = false
+
+            firetouchinterest(UpgradeButton, hrp, 0)
+            firetouchinterest(UpgradeButton, hrp, 1)
+
+            wait(1)  -- Adjust the delay as needed
+        end
+        wait()
+    end
+end
+
+local function AutoCollectGet()
+    while AutoCollect do
+        if AutoCollect then
+            for i,v in pairs(game:GetService("Workspace").Tycoon.Tycoons[yourtycoon].Drops:GetDescendants()) do
+                if v:IsA("Part") then
+                    v.Transparency = 1
+                    v.CFrame = hrp.CFrame
+                end
+            end
+        end
+        wait()
+    end
+end
+
+local function AutoDepGet()
+    while AutoDep do
+        if AutoDep then
+            game:GetService("ReplicatedStorage").Signals.RemoteEvents.PutRemote:FireServer()
+            wait(0.3)  -- Adjust the delay as needed
+        end
+        wait()
     end
 end
 
@@ -93,6 +135,39 @@ MainTab:AddToggle({
         AutoInfSample = Value
         if AutoInfSample then
             AutoInfSampleGet()
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Auto Upgrade",
+    Default = false,
+    Callback = function(Value)
+        AutoUpgrade = Value
+        if AutoUpgrade then
+            AutoUpgradeGet()
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Auto Collect",
+    Default = false,
+    Callback = function(Value)
+        AutoCollect = Value
+        if AutoCollect then
+            AutoCollectGet()
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Auto Deposit",
+    Default = false,
+    Callback = function(Value)
+        AutoDep = Value
+        if AutoDep then
+            AutoDepGet()
         end
     end    
 })
