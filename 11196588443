@@ -1,3 +1,4 @@
+-- Library
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Player = game.Players.LocalPlayer
 local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
@@ -14,7 +15,7 @@ local hrp = char.HumanoidRootPart
 local yourtycoon
 local zombies
 local ChoosedWeapon
-local list_param_weapon = {[1] = "Damage",[2] = "Firerate",[3] = "HeadshotMultiplier"}
+local list_param_weapon = {"Damage", "Firerate", "HeadshotMultiplier"}
 local param_weapon
 
 -- function
@@ -68,7 +69,6 @@ local AutoMerge = false
 local zombieOptions = {"+1 Zombie", "+3 Zombies", "+10 Zombies", "+30 Zombies", "+50 Zombies", "+100 Zombies"}
 local selectedZombieOption = zombieOptions[1] -- Default selected option
 
-
 local function AutoInfSampleGet()
     while AutoInfSample do
         if AutoInfSample then
@@ -78,7 +78,6 @@ local function AutoInfSampleGet()
         wait()  -- Adjust the delay as needed
     end
 end
-
 
 local function AutoUpgradeGet()
     while AutoUpgrade do
@@ -95,7 +94,6 @@ local function AutoUpgradeGet()
     end
 end
 
-
 local function AutoCollectGet()
     while AutoCollect do
         if AutoCollect then
@@ -110,7 +108,6 @@ local function AutoCollectGet()
     end
 end
 
-
 local function AutoDepGet()
     while AutoDep do
         if AutoDep then
@@ -120,7 +117,6 @@ local function AutoDepGet()
         wait()
     end
 end
-
 
 local function AutoMergeGet()
     while AutoMerge do
@@ -137,7 +133,6 @@ local function AutoMergeGet()
     end
 end
 
-
 local function AddZombies()
     if BuyZombie then
         for i, v in pairs(game:GetService("Workspace").Tycoon.Tycoons[yourtycoon]["Buttons_E"]:GetDescendants()) do
@@ -145,12 +140,11 @@ local function AddZombies()
                 v.CanCollide = false
                 firetouchinterest(v, hrp, 0)
                 firetouchinterest(v, hrp, 1)
-                task.wait(.5)
+                wait(0.5)
             end
         end
     end
 end
-
 
 OtherTab:AddButton({
     Name = "Admin Cmd",
@@ -176,7 +170,6 @@ MainTab:AddToggle({
         end
     end    
 })
-
 
 MainTab:AddToggle({
     Name = "Auto Upgrade",
