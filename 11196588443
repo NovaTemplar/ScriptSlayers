@@ -36,7 +36,7 @@ GetTycoon()
 OrionLib:MakeNotification({
     Name = "You logged in!",
     Content = "You logged in as "..Player.Name..".",
-    Image = "rbxassetid://14836421904",
+    Image = "rbxassetid://14828079730",
     Time = 5
 }) 
 
