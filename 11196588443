@@ -1,0 +1,99 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Player = game.Players.LocalPlayer
+local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
+
+local Players = game:GetService("Players")
+
+-- Variable
+
+local lp = Players.LocalPlayer
+local char = lp.Character
+local hum = char.Humanoid
+local hrp = char.HumanoidRootPart
+
+local yourtycoon
+local zombies
+local ChoosedWeapon
+local list_param_weapon = {[1] = "Damage",[2] = "Firerate",[3] = "HeadshotMultiplier"}
+local param_weapon
+
+-- function
+
+local function GetTycoon()
+    for i,v in pairs(game:GetService("Workspace").Tycoon.Tycoons:GetDescendants()) do
+        if v:IsA("ObjectValue") and v.Name == "Owner" then
+            if v.Value == lp then
+                yourtycoon = v.Parent.Name
+            end
+        end
+    end
+end
+GetTycoon()
+
+-- Main
+
+OrionLib:MakeNotification({
+    Name = "You logged in!",
+    Content = "You logged in as "..Player.Name..".",
+    Image = "rbxassetid://14836421904",
+    Time = 5
+}) 
+
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://14828079730",
+    PremiumOnly = false
+}) 
+
+local Section = MainTab:AddSection({
+    Name = "Main Section"
+})
+
+local OtherTab = Window:MakeTab({
+	Name = "Other's",
+	Icon = "rbxassetid://14828080427",
+	PremiumOnly = false
+})
+
+local Section = OtherTab:AddSection({
+    Name = "Others Section"
+})
+
+local AutoRob = false
+local AutoInfSample = false
+
+local function AutoInfSampleGet()
+    while AutoInfSample do
+        local args = {[1] = 14,[2] = Vector3.new(1, 1, 1)}
+        game:GetService("ReplicatedStorage").Signals.RemoteEvents.GetWoolRemote:FireServer(unpack(args))
+    end
+end
+
+OtherTab:AddButton({
+    Name = "Admin Cmd",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end
+})
+
+OtherTab:AddButton({
+    Name = "Exit",
+    Callback = function()
+        OrionLib:Destroy()
+    end
+})
+
+MainTab:AddToggle({
+    Name = "Inf Sample",
+    Default = false,
+    Callback = function(Value)
+        AutoInfSample = Value
+        if AutoInfSample then
+            AutoInfSampleGet()
+        end
+    end    
+})
+
+
+
+OrionLib:Init()
