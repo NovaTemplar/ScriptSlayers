@@ -67,6 +67,7 @@ local AutoDep = false
 local AutoMerge = false
 local zombieOptions = {"+1 Zombie", "+3 Zombies", "+10 Zombies", "+30 Zombies", "+50 Zombies", "+100 Zombies"}
 local selectedZombieOption = zombieOptions[1] -- Default selected option
+local collectDropsEnabled = false
 
 local function AutoInfSampleGet()
     while AutoInfSample do
@@ -145,6 +146,23 @@ local function AddZombies()
     end
 end
 
+local function CollectDrops()
+    if CollectDropsPVE then
+        pcall(function()
+            local char = lp.Character    
+            local hum = char.Humanoid
+            local hrp = char.HumanoidRootPart
+
+            for i, v in pairs(game:GetService("Workspace"):GetChildren()) do
+                if v:IsA("Part") and v.Name == "Money" then
+                    v.CanCollide = false
+                    v.CFrame = hrp.CFrame
+                end
+            end
+        end)
+    end
+end
+
 OtherTab:AddButton({
     Name = "Admin Cmd",
     Callback = function()
@@ -168,6 +186,18 @@ MainTab:AddToggle({
             AutoInfSampleGet()
         end
     end    
+})
+
+MainTab:Toggle({
+    Name = "Collect Drops",
+    Default = false,
+    Callback = function(Value)
+        CollectDropsPVE = Value
+        collectDropsEnabled = Value
+        if Value then
+            CollectDrops() -- Call the function to collect drops when the toggle is enabled
+        end
+    end
 })
 
 MainTab:AddToggle({
