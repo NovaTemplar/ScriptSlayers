@@ -238,7 +238,7 @@ MainTab:AddDropdown({
 })
 
 MainTab:AddToggle({
-    Name = "^ Auto Add",
+    Name = "Auto Add",
     Default = false,
     Callback = function(Value)
         BuyZombie = Value
