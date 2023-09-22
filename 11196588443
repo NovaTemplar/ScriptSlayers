@@ -200,6 +200,8 @@ MainTab:Toggle({
     end
 })
 
+MainTab:UpdateToggle("Collect Drops", collectDropsEnabled)
+
 MainTab:AddToggle({
     Name = "Auto Upgrade",
     Default = false,
