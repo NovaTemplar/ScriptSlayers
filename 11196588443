@@ -65,6 +65,7 @@ local AutoUpgrade = false
 local AutoCollect = false
 local AutoDep = false
 local AutoMerge = false
+local zombies = "+1 Zombie"
 
 local function AutoInfSampleGet()
     while AutoInfSample do
@@ -198,5 +199,37 @@ MainTab:AddToggle({
         end
     end    
 })
+
+b:Label("==============",{
+    TextSize = 25,
+    TextColor = Color3.fromRGB(255,255,255),
+    BgColor = Color3.fromRGB(69,69,69)
+})
+
+b:Toggle("^ Auto Add",function(bool)
+    getgenv().BuyZombie = bool
+    
+    task.spawn(function()
+        while task.wait() do
+            pcall(function()
+                
+                local char = lp.Character    
+                local hum = char.Humanoid
+                local hrp = char.HumanoidRootPart
+                
+                if BuyZombie then
+                    for i,v in pairs(game:GetService("Workspace").Tycoon.Tycoons[yourtycoon]["Buttons_E"]:GetDescendants()) do
+                        if v:IsA("MeshPart") and v.Parent.Name == zombies then
+                            v.CanCollide = false
+                            firetouchinterest(v, hrp, 0)
+                            firetouchinterest(v, hrp, 1)
+                            task.wait(.5)
+                        end
+                    end  
+                end
+            end)
+        end
+    end)
+end)
 
 OrionLib:Init()
