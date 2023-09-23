@@ -240,11 +240,14 @@ MainTab:AddDropdown({
     end    
 })
 
-
-MainTab:AddButton({
+MainTab:AddToggle({
     Name = "Auto Add",
-    Callback = function()
-        AddZombies()
+    Default = false,
+    Callback = function(Value)
+        BuyZombie = Value
+        if Value then
+            AddZombies() -- Call the function to add zombies when the toggle is enabled
+        end
     end
 })
 
