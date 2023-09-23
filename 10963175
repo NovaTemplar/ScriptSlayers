@@ -221,7 +221,7 @@ RemoveSection:AddButton({
                 for i, child in ipairs(children) do
                     if child.Info.Owner.Value == recipientName then
                         child.Control.Money:FireServer(-amountToRemove)
-                        wait(1) -- Wait for 1 second between transactions
+                        wait(0.1) -- Wait for 1 second between transactions
                     end
                 end
             end
