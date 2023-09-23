@@ -218,7 +218,6 @@ MainTab:AddToggle({
 })
 
 MainTab:AddDropdown({
-MainTab:AddDropdown({
     Name = "Zombie Add",
     Default = selectedZombieOption,
     Options = zombieOptions,
