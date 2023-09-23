@@ -81,6 +81,27 @@ local AutoDep = false
 local AutoMerge = false
 local zombieOptions = {"+1 Zombie", "+3 Zombies", "+10 Zombies", "+30 Zombies", "+50 Zombies", "+100 Zombies"}
 local selectedZombieOption = zombieOptions[1] -- Default selected option
+local Esp = false
+
+local function ESPALL()
+    while Esp do
+        local players = game.Players:GetPlayers()
+
+            for _, player in pairs(players) do
+
+                local highlight = Instance.new("Highlight")
+
+                highlight.Parent = player.Character
+
+                highlight.Adornee = player.Character
+
+                highlight.OutlineColor = Color3.new(1, 1, 1)
+
+                highlight.OutlineTransparency = 0
+        wait(1)
+        end
+    end
+end
 
 local function AutoInfSampleGet()
     while AutoInfSample do
@@ -270,6 +291,17 @@ PveSection:AddButton({
         }
         game:GetService("ReplicatedStorage"):WaitForChild("Signals"):WaitForChild("RemoteEvents"):WaitForChild("SprintRemote"):FireServer(unpack(args))
     end
+})
+
+PveSection:AddToggle({
+    Name = "Esp",
+    Default = false,
+    Callback = function(Value)
+        Esp = Value
+        if Esp then
+            ESPALL()
+        end
+    end    
 })
 
 PveSection:AddToggle({
