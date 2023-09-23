@@ -18,6 +18,7 @@ local ChoosedWeapon
 local list_param_weapon = {"Damage", "Firerate", "HeadshotMultiplier"}
 local param_weapon
 local BuyZombie = false
+local TPZombies = false
 
 -- function
 
@@ -37,18 +38,29 @@ GetTycoon()
 OrionLib:MakeNotification({
     Name = "You logged in!",
     Content = "You logged in as "..Player.Name..".",
-    Image = "rbxassetid://14828079730",
+    Image = "rbxassetid://14836421904",
     Time = 5
 }) 
 
 local MainTab = Window:MakeTab({
     Name = "Main",
-    Icon = "rbxassetid://14828079730",
+    Icon = "rbxassetid://14848484384",
     PremiumOnly = false
 }) 
 
 local Section = MainTab:AddSection({
     Name = "Main Section"
+})
+
+-- PVE & GunMod Tab
+local PveTab = Window:MakeTab({
+    Name = "PVE & GunMod",
+    Icon = "rbxassetid://14836534175", -- Replace with your icon ID
+    PremiumOnly = false
+})
+
+local PveSection = PveTab:AddSection({
+    Name = "PVE & GunMod Section"
 })
 
 local OtherTab = Window:MakeTab({
@@ -69,7 +81,6 @@ local AutoDep = false
 local AutoMerge = false
 local zombieOptions = {"+1 Zombie", "+3 Zombies", "+10 Zombies", "+30 Zombies", "+50 Zombies", "+100 Zombies"}
 local selectedZombieOption = zombieOptions[1] -- Default selected option
-
 
 local function AutoInfSampleGet()
     while AutoInfSample do
@@ -247,6 +258,34 @@ MainTab:AddToggle({
         BuyZombie = Value
         if Value then
             AddZombies() -- Call the function to add zombies when the toggle is enabled
+        end
+    end
+})
+
+PveSection:AddToggle({
+    Name = "TP All Zombies",
+    Default = false,
+    Callback = function(Value)
+        TPZombies = Value
+        if TPZombies then
+            task.spawn(function()
+                while TPZombies do
+                    pcall(function()
+                        local char = lp.Character    
+                        local hum = char.Humanoid
+                        local hrp = char.HumanoidRootPart
+                        
+                        local gate = game:GetService("Workspace").Tycoon.Tycoons[yourtycoon].Essentials.Gate.Beam
+                    
+                        for i,v in pairs(game:GetService("Workspace").Zombies:GetDescendants()) do
+                            if v:IsA("Part") and v.Name == "HumanoidRootPart" then  
+                                v.CFrame = hrp.CFrame + hrp.CFrame.lookVector * 7
+                                task.wait(.2)
+                            end
+                        end
+                    end)
+                end
+            end)
         end
     end
 })
