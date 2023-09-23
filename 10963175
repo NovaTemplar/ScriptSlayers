@@ -4,7 +4,7 @@ local Player = game.Players.LocalPlayer
 local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
 
 OrionLib:MakeNotification({
-    Name = "You logged in!",
+    Name = "You logged in",
     Content = "You logged in as "..Player.Name..".",
     Image = "rbxassetid://14836421904",
     Time = 5
