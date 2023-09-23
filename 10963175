@@ -3,19 +3,12 @@ local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shl
 local Player = game.Players.LocalPlayer
 local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
 
--- Create a new Lua script for your theme
-local newTheme = {
-    BackgroundColor = Color3.new(0.5, 0.5, 1), -- This sets the background color of your UI to light blue.
-    TextColor = Color3.new(0, 0, 0), -- This sets the text color of your UI to black.
-    ButtonColor = Color3.new(0.75, 0.75, 1), -- This sets the button color of your UI to light blue.
-    ButtonTextColor = Color3.new(0, 0, 0), -- This sets the button text color of your UI to black.
-}
-
--- Load the new theme
-OrionLib:LoadTheme(newTheme)
-
--- Set the theme of your UI
-Window.Theme = newTheme
+OrionLib:SetTheme({
+    BackgroundColor = Color3.new(0.5, 0.5, 1),
+    TextColor = Color3.new(0, 0, 0),
+    ButtonColor = Color3.new(0.75, 0.75, 1),
+    ButtonTextColor = Color3.new(0, 0, 0),
+})
 
 OrionLib:MakeNotification({
     Name = "You logged in!",
