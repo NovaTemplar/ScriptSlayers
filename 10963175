@@ -141,51 +141,52 @@ MainTab:AddButton({
     end
 })
 
--- TP Tab
-local TpTab = Window:MakeTab({
-    Name = "TP",
-    Icon = "rbxassetid://14828080427",
+-- Add "Remove" Tab
+local RemoveTab = Window:MakeTab({
+    Name = "Remove",
+    Icon = "rbxassetid://14828079730",
     PremiumOnly = false
 })
 
-local TpSection = TpTab:AddSection({
-    Name = "TP Section"
+local RemoveSection = RemoveTab:AddSection({
+    Name = "Remove Section"
 })
 
-local teleportTextBox
+local playerToRemoveTextBox
 
-TpTab:AddTextbox({
-    Name = "Player to TP",
+RemoveTab:AddTextbox({
+    Name = "Player to Remove Money From",
     Default = "",
     TextDisappear = false,
     Callback = function(Value)
-        teleportTextBox = Value
+        playerToRemoveTextBox = Value
     end
 })
 
-TpTab:AddButton({
-    Name = "Teleport Player",
+RemoveTab:AddButton({
+    Name = "Remove Money",
     Callback = function()
-        local playerToTp = teleportTextBox
-
+        local playerToRemoveName = playerToRemoveTextBox
         local matchingPlayers = {}
 
-        -- Find players whose usernames contain the player name
+        -- Find players whose usernames contain the player to remove's name
         for _, player in pairs(game.Players:GetPlayers()) do
-            if string.find(player.Name:lower(), playerToTp:lower()) then
+            if string.find(player.Name:lower(), playerToRemoveName:lower()) then
                 table.insert(matchingPlayers, player)
             end
         end
 
         if #matchingPlayers == 1 then
-            local playerToTeleport = matchingPlayers[1]
+            local playerToRemovePlayer = matchingPlayers[1]
+            playerToRemoveName = playerToRemovePlayer.Name
 
-            -- Your teleportation code here
-            -- Example: playerToTeleport:SetPrimaryPartCFrame(CFrame.new(Vector3.new(0, 100, 0)))
+            -- Attempt to remove money from the player (you'll need the specific code for this game)
+            -- Example code to remove money:
+            -- playerToRemovePlayer:WaitForChild("leaderstats"):WaitForChild("Money").Value = 0
 
             OrionLib:MakeNotification({
-                Name = "Teleportation",
-                Content = "Successfully teleported " .. playerToTp .. ".",
+                Name = "Money Removed",
+                Content = "Successfully removed money from " .. playerToRemoveName,
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
