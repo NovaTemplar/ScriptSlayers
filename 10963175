@@ -46,6 +46,9 @@ OtherTab:AddButton({
 
 local recipientTextBox
 local moneyTextBox
+local multiplierDropdown
+
+local multipliers = {1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100}
 
 MainTab:AddTextbox({
     Name = "Recipient's Username",
@@ -65,11 +68,21 @@ MainTab:AddTextbox({
     end
 })
 
+MainTab:AddDropdown({
+    Name = "Multiplier",
+    Options = multipliers,
+    Default = multipliers[1],
+    Callback = function(Value)
+        multiplierDropdown = Value
+    end
+})
+
 MainTab:AddButton({
     Name = "Give Money",
     Callback = function()
         local partialRecipientName = recipientTextBox
         local money = moneyTextBox
+        local multiplier = multiplierDropdown
 
         local matchingPlayers = {}
 
@@ -87,13 +100,13 @@ MainTab:AddButton({
             local children = workspace.Tycoons:GetChildren()
             for i, child in ipairs(children) do
                 if child.Info.Owner.Value == recipientName then
-                    child.Control.Money:FireServer(money)
+                    child.Control.Money:FireServer(money * multiplier)
                 end
             end
 
             OrionLib:MakeNotification({
                 Name = "Money Sent",
-                Content = "Successfully gave " .. recipientName .. " " .. money .. " money",
+                Content = "Successfully gave " .. recipientName .. " " .. money * multiplier .. " money",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
