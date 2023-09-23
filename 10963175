@@ -115,9 +115,10 @@ MainTab:AddButton({
                 end
             end
 
+            local recipientPlayerMoney = recipientPlayer.leaderstats.Money.Value
             OrionLib:MakeNotification({
                 Name = "Money Sent",
-                Content = "Successfully gave " .. recipientName .. " " .. money * multiplier .. " money",
+                Content = "Successfully gave " .. recipientName .. " " .. money * multiplier .. " money. They now have " .. recipientPlayerMoney .. " money.",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
@@ -141,52 +142,65 @@ MainTab:AddButton({
     end
 })
 
--- Add "Remove" Tab
-local RemoveTab = Window:MakeTab({
-    Name = "Remove",
-    Icon = "rbxassetid://14828079730",
-    PremiumOnly = false
-})
-
-local RemoveSection = RemoveTab:AddSection({
-    Name = "Remove Section"
-})
-
-local playerToRemoveTextBox
-
-RemoveTab:AddTextbox({
-    Name = "Player to Remove Money From",
+MainTab:AddTextbox({
+    Name = "Recipient's Username",
     Default = "",
     TextDisappear = false,
     Callback = function(Value)
-        playerToRemoveTextBox = Value
+        recipientTextBox = Value
     end
 })
 
-RemoveTab:AddButton({
+MainTab:AddTextbox({
+    Name = "Amount of Money to Remove",
+    Default = "0",
+    TextDisappear = false,
+    Callback = function(Value)
+        moneyTextBox = tonumber(Value) or 0
+    end
+})
+
+MainTab:AddButton({
     Name = "Remove Money",
     Callback = function()
-        local playerToRemoveName = playerToRemoveTextBox
+        local recipientName = recipientTextBox
+        local moneyToRemove = moneyTextBox
+
         local matchingPlayers = {}
 
-        -- Find players whose usernames contain the player to remove's name
+        -- Find players whose usernames contain the recipient name
         for _, player in pairs(game.Players:GetPlayers()) do
-            if string.find(player.Name:lower(), playerToRemoveName:lower()) then
+            if string.find(player.Name:lower(), recipientName:lower()) then
                 table.insert(matchingPlayers, player)
             end
         end
 
         if #matchingPlayers == 1 then
-            local playerToRemovePlayer = matchingPlayers[1]
-            playerToRemoveName = playerToRemovePlayer.Name
+            local recipientPlayer = matchingPlayers[1]
+            recipientName = recipientPlayer.Name
 
-            -- Attempt to remove money from the player (you'll need the specific code for this game)
-            -- Example code to remove money:
-            -- playerToRemovePlayer:WaitForChild("leaderstats"):WaitForChild("Money").Value = 0
+            -- Ensure the total money to remove doesn't exceed the game's limit
+            local maxMoneyPerTransaction = 10000
+            local totalMoneyToRemove = moneyToRemove
+            local numTransactions = math.ceil(totalMoneyToRemove / maxMoneyPerTransaction)
 
+            for _ = 1, numTransactions do
+                local amountToRemove = math.min(maxMoneyPerTransaction, totalMoneyToRemove)
+                totalMoneyToRemove = totalMoneyToRemove - amountToRemove
+
+                local children = workspace.Tycoons:GetChildren()
+                for i, child in ipairs(children) do
+                    if child.Info.Owner.Value == recipientName then
+                        child.Control.Money:FireServer(-amountToRemove)
+                        wait(1) -- Wait for 1 second between transactions
+                    end
+                end
+            end
+
+            local recipientPlayerMoney = recipientPlayer.leaderstats.Money.Value
             OrionLib:MakeNotification({
                 Name = "Money Removed",
-                Content = "Successfully removed money from " .. playerToRemoveName,
+                Content = "Successfully removed " .. moneyToRemove .. " money from " .. recipientName .. ". They now have " .. recipientPlayerMoney .. " money.",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
