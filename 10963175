@@ -11,19 +11,17 @@ OrionLib:MakeNotification({
 })
 
 local MainTab = Window:MakeTab({
-    Name = "Add",
-    Icon = "rbxassetid://14858459736",
-    PremiumOnly = false
-})
-
-local RemoveTab = Window:MakeTab({
-    Name = "Remove",
+    Name = "Add & Remove Money",
     Icon = "rbxassetid://14858459736",
     PremiumOnly = false
 })
 
 local MainSection = MainTab:AddSection({
     Name = "Add Section"
+})
+
+local RemoveSection = MainTab:AddSection({
+    Name = "Remove Section"
 })
 
 local OtherTab = Window:MakeTab({
@@ -37,12 +35,12 @@ local OtherSection = OtherTab:AddSection({
 })
 
 local SettingTab = Window:MakeTab({
-    Name = "Other's",
+    Name = "Settings",
     Icon = "rbxassetid://14858471173",
     PremiumOnly = false
 })
 
-local SettingSection = OtherTab:AddSection({
+local SettingSection = SettingTab:AddSection({
     Name = "Settings Section"
 })
 
@@ -160,7 +158,7 @@ MainTab:AddButton({
 local searchUsernameTextBox
 local removeMoneyTextBox
 
-RemoveTab:AddTextbox({
+RemoveSection:AddTextbox({
     Name = "Search Username",
     Default = "",
     TextDisappear = false,
@@ -169,7 +167,7 @@ RemoveTab:AddTextbox({
     end
 })
 
-RemoveTab:AddTextbox({
+RemoveSection:AddTextbox({
     Name = "Amount of Money to Remove",
     Default = "0",
     TextDisappear = false,
@@ -178,7 +176,7 @@ RemoveTab:AddTextbox({
     end
 })
 
-RemoveTab:AddButton({
+RemoveSection:AddButton({
     Name = "Remove Money",
     Callback = function()
         local recipientName = searchUsernameTextBox
