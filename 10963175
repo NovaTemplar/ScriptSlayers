@@ -29,8 +29,44 @@ local MainTab = Window:MakeTab({
 })
 
 -- Create a section in the main tab
-local Section1 = MainTab:AddSection({
+local Section = MainTab:AddSection({
     Name = "Main Section"
+})
+
+-- Create a textbox for entering the amount of money
+local moneyTextBox
+Section:AddTextbox({
+    Name = "Money Amount",
+    Default = "0", -- Default value in the textbox
+    Callback = function(Value)
+        moneyTextBox = tonumber(Value) -- Store the entered value as a number
+    end
+})
+
+-- Create a button to give money
+Section:AddButton({
+    Name = "Give Money",
+    Callback = function()
+        -- Check if the moneyTextBox is valid (a number)
+        if moneyTextBox and type(moneyTextBox) == "number" then
+            -- Find the player's tycoon and give them money
+            local children = workspace.Tycoons:GetChildren()
+            for i, child in ipairs(children) do
+                if child.Info.Owner.Value == game.Players.LocalPlayer.Name then
+                    child.Control.Money:FireServer(moneyTextBox)
+                    -- Display a notification with the amount of money given
+                    OrionLib:MakeNotification({
+                        Name = "Money Received",
+                        Content = "Successfully got $" .. moneyTextBox .. " money!",
+                        Image = "rbxassetid://14836421904",
+                        Time = 3
+                    })
+                end
+            end
+        else
+            warn("Invalid money amount entered.")
+        end
+    end
 })
 
 -- Create the Other tab
@@ -45,37 +81,8 @@ local Section = OtherTab:AddSection({
     Name = "Others Section"
 })
 
--- Create a textbox for entering the amount of money
-local moneyTextBox
-Section1:AddTextbox({
-    Name = "Money Amount",
-    Default = "0", -- Default value in the textbox
-    Callback = function(Value)
-        moneyTextBox = tonumber(Value) -- Store the entered value as a number
-    end
-})
-
--- Create a button to give money
-Section1:AddButton({
-    Name = "Give Money",
-    Callback = function()
-        -- Check if the moneyTextBox is valid (a number)
-        if moneyTextBox and type(moneyTextBox) == "number" then
-            -- Find the player's tycoon and give them money
-            local children = workspace.Tycoons:GetChildren()
-            for i, child in ipairs(children) do
-                if child.Info.Owner.Value == game.Players.LocalPlayer.Name then
-                    child.Control.Money:FireServer(moneyTextBox)
-                end
-            end
-        else
-            warn("Invalid money amount entered.")
-        end
-    end
-})
-
 -- Create a button for running admin commands
-OtherTab:AddButton({
+Section:AddButton({
     Name = "Admin Cmd",
     Callback = function()
         loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'), true))()
@@ -83,7 +90,7 @@ OtherTab:AddButton({
 })
 
 -- Create a button to exit the script
-OtherTab:AddButton({
+Section:AddButton({
     Name = "Exit",
     Callback = function()
         OrionLib:Destroy()
