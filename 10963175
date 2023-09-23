@@ -68,30 +68,48 @@ MainTab:AddTextbox({
 MainTab:AddButton({
     Name = "Give Money",
     Callback = function()
-        local recipientName = recipientTextBox
+        local partialRecipientName = recipientTextBox
         local money = moneyTextBox
-        
-        -- Find the recipient player by username
-        local recipientPlayer = game.Players:FindFirstChild(recipientName)
 
-        -- Check if the recipient player exists
-        if recipientPlayer then
+        local matchingPlayers = {}
+
+        -- Find players whose usernames contain the partial recipient name
+        for _, player in pairs(game.Players:GetPlayers()) do
+            if string.find(player.Name:lower(), partialRecipientName:lower()) then
+                table.insert(matchingPlayers, player)
+            end
+        end
+
+        if #matchingPlayers == 1 then
+            local recipientPlayer = matchingPlayers[1]
+            local recipientName = recipientPlayer.Name
+
             local children = workspace.Tycoons:GetChildren()
             for i, child in ipairs(children) do
                 if child.Info.Owner.Value == recipientName then
                     child.Control.Money:FireServer(money)
                 end
             end
+
             OrionLib:MakeNotification({
                 Name = "Money Sent",
-                Content = "Successfully gave "..recipientName.." "..money.." money",
+                Content = "Successfully gave " .. recipientName .. " " .. money .. " money",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        elseif #matchingPlayers > 1 then
+            -- Multiple matching players found, cannot determine recipient
+            OrionLib:MakeNotification({
+                Name = "Multiple Matches Found",
+                Content = "Multiple players found with similar usernames. Be more specific.",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
         else
+            -- No matching players found
             OrionLib:MakeNotification({
-                Name = "Money Transfer Failed",
-                Content = "Recipient player not found with username: " .. recipientName,
+                Name = "Player Not Found",
+                Content = "No player found with a similar username.",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
