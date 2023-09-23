@@ -20,16 +20,6 @@ local Section = MainTab:AddSection({
     Name = "Main Section"
 })
 
-local ModTab = Window:MakeTab({
-    Name = "Mod",
-    Icon = "rbxassetid://14828080307", -- You can replace this with an appropriate icon
-    PremiumOnly = false
-})
-
-local ModSection = ModTab:AddSection({
-    Name = "Moderation Section"
-})
-
 local OtherTab = Window:MakeTab({
     Name = "Other's",
     Icon = "rbxassetid://14828080427",
@@ -57,7 +47,6 @@ OtherTab:AddButton({
 local recipientTextBox
 local moneyTextBox
 local multiplierDropdown
-local kickPlayerTextBox
 
 local multipliers = {1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100}
 
@@ -85,15 +74,6 @@ MainTab:AddDropdown({
     Default = multipliers[1],
     Callback = function(Value)
         multiplierDropdown = Value
-    end
-})
-
-ModSection:AddTextbox({
-    Name = "Player Username to Kick",
-    Default = "",
-    TextDisappear = false,
-    Callback = function(Value)
-        kickPlayerTextBox = Value
     end
 })
 
@@ -161,34 +141,56 @@ MainTab:AddButton({
     end
 })
 
-ModSection:AddButton({
-    Name = "Kick Player",
+-- TP Tab
+local TpTab = Window:MakeTab({
+    Name = "TP",
+    Icon = "rbxassetid://14828080427",
+    PremiumOnly = false
+})
+
+local TpSection = TpTab:AddSection({
+    Name = "TP Section"
+})
+
+local teleportTextBox
+
+TpTab:AddTextbox({
+    Name = "Player to TP",
+    Default = "",
+    TextDisappear = false,
+    Callback = function(Value)
+        teleportTextBox = Value
+    end
+})
+
+TpTab:AddButton({
+    Name = "Teleport Player",
     Callback = function()
-        local playerToKick = kickPlayerTextBox
+        local playerToTp = teleportTextBox
 
         local matchingPlayers = {}
 
-        -- Find players whose usernames contain the player to kick
+        -- Find players whose usernames contain the player name
         for _, player in pairs(game.Players:GetPlayers()) do
-            if string.find(player.Name:lower(), playerToKick:lower()) then
+            if string.find(player.Name:lower(), playerToTp:lower()) then
                 table.insert(matchingPlayers, player)
             end
         end
 
         if #matchingPlayers == 1 then
-            local player = matchingPlayers[1]
+            local playerToTeleport = matchingPlayers[1]
 
-            -- Kick the player from the game
-            player:Kick("You have been kicked by a moderator.")
+            -- Your teleportation code here
+            -- Example: playerToTeleport:SetPrimaryPartCFrame(CFrame.new(Vector3.new(0, 100, 0)))
 
             OrionLib:MakeNotification({
-                Name = "Player Kicked",
-                Content = player.Name .. " has been kicked from the game.",
+                Name = "Teleportation",
+                Content = "Successfully teleported " .. playerToTp .. ".",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
         elseif #matchingPlayers > 1 then
-            -- Multiple matching players found, cannot determine player
+            -- Multiple matching players found, cannot determine recipient
             OrionLib:MakeNotification({
                 Name = "Multiple Matches Found",
                 Content = "Multiple players found with similar usernames. Be more specific.",
