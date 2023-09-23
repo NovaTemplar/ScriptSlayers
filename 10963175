@@ -11,7 +11,7 @@ OrionLib:MakeNotification({
 })
 
 local MainTab = Window:MakeTab({
-    Name = "Add & Remove",
+    Name = "Add",
     Icon = "rbxassetid://14858459736",
     PremiumOnly = false
 })
@@ -20,7 +20,13 @@ local MainSection = MainTab:AddSection({
     Name = "Add Section"
 })
 
-local RemoveSection = MainTab:AddSection({
+local RemoveTab = Window:MakeTab({
+    Name = "Remove",
+    Icon = "rbxassetid://14858459736",
+    PremiumOnly = false
+})
+
+local RemoveSection = RemoveTab:AddSection({
     Name = "Remove Section"
 })
 
