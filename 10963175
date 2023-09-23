@@ -1,131 +1,102 @@
--- Load the Orion library
+-- Library
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-
--- Get the local player
 local Player = game.Players.LocalPlayer
+local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
 
--- Create the main window
-local Window = OrionLib:MakeWindow({
-    Name = "Kyro - By Nova",
-    IntroText = "Kyro",
-    HidePremium = false,
-    SaveConfig = false,
-    ConfigFolder = "ScriptSlayers"
-})
-
--- Create a notification to indicate login
 OrionLib:MakeNotification({
     Name = "You logged in!",
-    Content = "You logged in as " .. Player.Name .. ".",
+    Content = "You logged in as "..Player.Name..".",
     Image = "rbxassetid://14836421904",
     Time = 5
 })
 
--- Create the main tab
 local MainTab = Window:MakeTab({
     Name = "Main",
     Icon = "rbxassetid://14828079730",
     PremiumOnly = false
 })
 
--- Create a section in the main tab
 local Section = MainTab:AddSection({
     Name = "Main Section"
 })
 
--- Create a textbox for entering the amount of money
-local moneyTextBox
-Section:AddTextbox({
-    Name = "Money Amount",
-    Default = "0", -- Default value in the textbox
-    Callback = function(Value)
-        moneyTextBox = tonumber(Value) -- Store the entered value as a number
-    end
-})
-
--- Create a textbox for entering the recipient's name
-local recipientTextBox
-Section:AddTextbox({
-    Name = "Recipient's Name",
-    Default = "", -- Default value in the textbox
-    Callback = function(Value)
-        recipientTextBox = Value -- Store the entered value as text
-    end
-})
-
--- Create a button to give money
-Section:AddButton({
-    Name = "Give Money",
-    Callback = function()
-        -- Check if the moneyTextBox is valid (a number) and recipientTextBox is not empty
-        if moneyTextBox and type(moneyTextBox) == "number" and recipientTextBox ~= "" then
-            -- Find the player's tycoon and give them money
-            local children = workspace.Tycoons:GetChildren()
-            for i, child in ipairs(children) do
-                if child.Info.Owner.Value == game.Players.LocalPlayer.Name then
-                    child.Control.Money:FireServer(moneyTextBox)
-                    -- Display a notification with the amount of money given
-                    OrionLib:MakeNotification({
-                        Name = "Money Received",
-                        Content = "Successfully got $" .. moneyTextBox .. " money!",
-                        Image = "rbxassetid://14836421904",
-                        Time = 3
-                    })
-                end
-            end
-            -- Check if the recipient's name matches any player's name
-            local recipientPlayer = game.Players:FindFirstChild(recipientTextBox)
-            if recipientPlayer then
-                -- Give money to the recipient
-                local recipientCharacter = recipientPlayer.Character
-                local recipientHumanoidRootPart = recipientCharacter:WaitForChild("HumanoidRootPart")
-                local recipientMoney = recipientCharacter:FindFirstChild("Money")
-                if recipientMoney then
-                    recipientMoney.Value = recipientMoney.Value + moneyTextBox
-                    -- Display a notification for the recipient
-                    OrionLib:MakeNotification({
-                        Name = "Money Received",
-                        Content = "You received $" .. moneyTextBox .. " from " .. Player.Name .. "!",
-                        Image = "rbxassetid://14836421904",
-                        Time = 3
-                    })
-                end
-            else
-                warn("Recipient not found.")
-            end
-        else
-            warn("Invalid input.")
-        end
-    end
-})
-
--- Create the Other tab
 local OtherTab = Window:MakeTab({
     Name = "Other's",
     Icon = "rbxassetid://14828080427",
     PremiumOnly = false
 })
 
--- Create a section in the Other tab
 local Section = OtherTab:AddSection({
     Name = "Others Section"
 })
 
--- Create a button for running admin commands
-Section:AddButton({
+OtherTab:AddButton({
     Name = "Admin Cmd",
     Callback = function()
         loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'), true))()
     end
 })
 
--- Create a button to exit the script
-Section:AddButton({
+OtherTab:AddButton({
     Name = "Exit",
     Callback = function()
         OrionLib:Destroy()
     end
 })
 
--- Initialize the Orion library
+local recipientTextBox
+local moneyTextBox
+
+MainTab:AddTextbox({
+    Name = "Recipient's Username",
+    Default = "",
+    TextDisappear = false,
+    Callback = function(Value)
+        recipientTextBox = Value
+    end
+})
+
+MainTab:AddTextbox({
+    Name = "Amount of Money",
+    Default = "0",
+    TextDisappear = false,
+    Callback = function(Value)
+        moneyTextBox = tonumber(Value) or 0
+    end
+})
+
+MainTab:AddButton({
+    Name = "Give Money",
+    Callback = function()
+        local recipientName = recipientTextBox
+        local money = moneyTextBox
+        
+        -- Find the recipient player by username
+        local recipientPlayer = game.Players:FindFirstChild(recipientName)
+
+        -- Check if the recipient player exists
+        if recipientPlayer then
+            local children = workspace.Tycoons:GetChildren()
+            for i, child in ipairs(children) do
+                if child.Info.Owner.Value == recipientName then
+                    child.Control.Money:FireServer(money)
+                end
+            end
+            OrionLib:MakeNotification({
+                Name = "Money Sent",
+                Content = "Successfully gave "..recipientName.." "..money.." money",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        else
+            OrionLib:MakeNotification({
+                Name = "Money Transfer Failed",
+                Content = "Recipient player not found with username: " .. recipientName,
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        end
+    end
+})
+
 OrionLib:Init()
