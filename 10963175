@@ -29,7 +29,7 @@ local MainTab = Window:MakeTab({
 })
 
 -- Create a section in the main tab
-local Section = MainTab:AddSection({
+local Section1 = MainTab:AddSection({
     Name = "Main Section"
 })
 
@@ -47,7 +47,7 @@ local Section = OtherTab:AddSection({
 
 -- Create a textbox for entering the amount of money
 local moneyTextBox
-MainTab:AddTextbox({
+Section1:AddTextbox({
     Name = "Money Amount",
     Default = "0", -- Default value in the textbox
     Callback = function(Value)
@@ -56,7 +56,7 @@ MainTab:AddTextbox({
 })
 
 -- Create a button to give money
-MainTab:AddButton({
+Section1:AddButton({
     Name = "Give Money",
     Callback = function()
         -- Check if the moneyTextBox is valid (a number)
