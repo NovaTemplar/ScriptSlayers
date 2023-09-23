@@ -38,18 +38,29 @@ GetTycoon()
 OrionLib:MakeNotification({
     Name = "You logged in!",
     Content = "You logged in as "..Player.Name..".",
-    Image = "rbxassetid://14828079730",
+    Image = "rbxassetid://14836421904",
     Time = 5
 }) 
 
 local MainTab = Window:MakeTab({
     Name = "Main",
-    Icon = "rbxassetid://14828079730",
+    Icon = "rbxassetid://14848484384",
     PremiumOnly = false
 }) 
 
 local Section = MainTab:AddSection({
     Name = "Main Section"
+})
+
+-- PVE & GunMod Tab
+local PveTab = Window:MakeTab({
+    Name = "PVE & GunMod",
+    Icon = "rbxassetid://14854526909", -- Replace with your icon ID
+    PremiumOnly = false
+})
+
+local PveSection = PveTab:AddSection({
+    Name = "PVE & GunMod Section"
 })
 
 local OtherTab = Window:MakeTab({
@@ -251,17 +262,6 @@ MainTab:AddToggle({
     end
 })
 
--- PVE & GunMod Tab
-local PveTab = Window:MakeTab({
-    Name = "PVE & GunMod",
-    Icon = "rbxassetid://YOUR_ICON_ID", -- Replace with your icon ID
-    PremiumOnly = false
-})
-
-local PveSection = PveTab:AddSection({
-    Name = "PVE & GunMod Section"
-})
-
 PveSection:AddToggle({
     Name = "TP All Zombies",
     Default = false,
@@ -324,13 +324,13 @@ PveSection:AddDropdown({
     end
 })
 
-PveSection:AddBox({
+PveSection:AddTextbox({
     Name = "How much?",
-    Type = "number",
-    Default = 1,
+    Default = "1",
+    TextDisappear = true,
     Callback = function(Value)
         if lp.Backpack[ChoosedWeapon].Configuration[param_weapon] ~= nil then
-            lp.Backpack[ChoosedWeapon].Configuration[param_weapon].Value = Value
+            lp.Backpack[ChoosedWeapon].Configuration[param_weapon].Value = tonumber(Value)
             
             game.StarterGui:SetCore("SendNotification", {
                 Title = "Magic !",
