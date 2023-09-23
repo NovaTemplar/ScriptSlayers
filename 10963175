@@ -57,6 +57,13 @@ OtherTab:AddButton({
     end
 })
 
+OtherTab:AddButton({
+    Name = "SimpleSpy",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua"))()
+    end
+})
+
 SettingTab:AddButton({
     Name = "Exit",
     Callback = function()
