@@ -13,7 +13,7 @@ OrionLib:MakeNotification({
 local MainTab = Window:MakeTab({
     Name = "Add",
     Icon = "rbxassetid://14858459736",
-    PremiumOnly = false
+    PremiumOnly = true
 })
 
 local MainSection = MainTab:AddSection({
@@ -23,7 +23,7 @@ local MainSection = MainTab:AddSection({
 local RemoveTab = Window:MakeTab({
     Name = "Remove",
     Icon = "rbxassetid://14858459736",
-    PremiumOnly = false
+    PremiumOnly = true
 })
 
 local RemoveSection = RemoveTab:AddSection({
