@@ -11,29 +11,39 @@ OrionLib:MakeNotification({
 })
 
 local MainTab = Window:MakeTab({
-    Name = "Main",
-    Icon = "rbxassetid://14828079730",
+    Name = "Add",
+    Icon = "rbxassetid://14858459736",
     PremiumOnly = false
 })
 
 local RemoveTab = Window:MakeTab({
     Name = "Remove",
-    Icon = "rbxassetid://14836421904",
+    Icon = "rbxassetid://14858459736",
     PremiumOnly = false
 })
 
 local MainSection = MainTab:AddSection({
-    Name = "Main Section"
+    Name = "Add Section"
 })
 
 local OtherTab = Window:MakeTab({
     Name = "Other's",
-    Icon = "rbxassetid://14828080427",
+    Icon = "rbxassetid://14858509415",
     PremiumOnly = false
 })
 
 local OtherSection = OtherTab:AddSection({
     Name = "Others Section"
+})
+
+local SettingTab = Window:MakeTab({
+    Name = "Other's",
+    Icon = "rbxassetid://14858471173",
+    PremiumOnly = false
+})
+
+local SettingSection = OtherTab:AddSection({
+    Name = "Settings Section"
 })
 
 OtherTab:AddButton({
@@ -43,7 +53,7 @@ OtherTab:AddButton({
     end
 })
 
-OtherTab:AddButton({
+SettingTab:AddButton({
     Name = "Exit",
     Callback = function()
         OrionLib:Destroy()
