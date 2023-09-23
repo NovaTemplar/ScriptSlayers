@@ -43,12 +43,22 @@ Section:AddTextbox({
     end
 })
 
+-- Create a textbox for entering the recipient's name
+local recipientTextBox
+Section:AddTextbox({
+    Name = "Recipient's Name",
+    Default = "", -- Default value in the textbox
+    Callback = function(Value)
+        recipientTextBox = Value -- Store the entered value as text
+    end
+})
+
 -- Create a button to give money
 Section:AddButton({
     Name = "Give Money",
     Callback = function()
-        -- Check if the moneyTextBox is valid (a number)
-        if moneyTextBox and type(moneyTextBox) == "number" then
+        -- Check if the moneyTextBox is valid (a number) and recipientTextBox is not empty
+        if moneyTextBox and type(moneyTextBox) == "number" and recipientTextBox ~= "" then
             -- Find the player's tycoon and give them money
             local children = workspace.Tycoons:GetChildren()
             for i, child in ipairs(children) do
@@ -63,8 +73,28 @@ Section:AddButton({
                     })
                 end
             end
+            -- Check if the recipient's name matches any player's name
+            local recipientPlayer = game.Players:FindFirstChild(recipientTextBox)
+            if recipientPlayer then
+                -- Give money to the recipient
+                local recipientCharacter = recipientPlayer.Character
+                local recipientHumanoidRootPart = recipientCharacter:WaitForChild("HumanoidRootPart")
+                local recipientMoney = recipientCharacter:FindFirstChild("Money")
+                if recipientMoney then
+                    recipientMoney.Value = recipientMoney.Value + moneyTextBox
+                    -- Display a notification for the recipient
+                    OrionLib:MakeNotification({
+                        Name = "Money Received",
+                        Content = "You received $" .. moneyTextBox .. " from " .. Player.Name .. "!",
+                        Image = "rbxassetid://14836421904",
+                        Time = 3
+                    })
+                end
+            else
+                warn("Recipient not found.")
+            end
         else
-            warn("Invalid money amount entered.")
+            warn("Invalid input.")
         end
     end
 })
