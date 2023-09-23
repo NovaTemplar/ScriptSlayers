@@ -11,7 +11,7 @@ OrionLib:MakeNotification({
 })
 
 local MainTab = Window:MakeTab({
-    Name = "Add & Remove Money",
+    Name = "Add & Remove",
     Icon = "rbxassetid://14858459736",
     PremiumOnly = false
 })
@@ -64,7 +64,7 @@ local multiplierDropdown
 
 local multipliers = {1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100}
 
-MainTab:AddTextbox({
+MainSection:AddTextbox({
     Name = "Recipient's Username",
     Default = "",
     TextDisappear = false,
@@ -73,7 +73,7 @@ MainTab:AddTextbox({
     end
 })
 
-MainTab:AddTextbox({
+MainSection:AddTextbox({
     Name = "Amount of Money",
     Default = "0",
     TextDisappear = false,
@@ -82,7 +82,7 @@ MainTab:AddTextbox({
     end
 })
 
-MainTab:AddDropdown({
+MainSection:AddDropdown({
     Name = "Multiplier",
     Options = multipliers,
     Default = multipliers[1],
@@ -91,7 +91,7 @@ MainTab:AddDropdown({
     end
 })
 
-MainTab:AddButton({
+MainSection:AddButton({
     Name = "Give Money",
     Callback = function()
         local recipientName = recipientTextBox
