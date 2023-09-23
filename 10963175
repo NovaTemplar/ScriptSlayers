@@ -16,7 +16,13 @@ local MainTab = Window:MakeTab({
     PremiumOnly = false
 })
 
-local Section = MainTab:AddSection({
+local RemoveTab = Window:MakeTab({
+    Name = "Remove",
+    Icon = "rbxassetid://14836421904",
+    PremiumOnly = false
+})
+
+local MainSection = MainTab:AddSection({
     Name = "Main Section"
 })
 
@@ -26,7 +32,7 @@ local OtherTab = Window:MakeTab({
     PremiumOnly = false
 })
 
-local Section = OtherTab:AddSection({
+local OtherSection = OtherTab:AddSection({
     Name = "Others Section"
 })
 
@@ -142,29 +148,32 @@ MainTab:AddButton({
     end
 })
 
-MainTab:AddTextbox({
-    Name = "Recipient's Username",
+local searchUsernameTextBox
+local removeMoneyTextBox
+
+RemoveTab:AddTextbox({
+    Name = "Search Username",
     Default = "",
     TextDisappear = false,
     Callback = function(Value)
-        recipientTextBox = Value
+        searchUsernameTextBox = Value
     end
 })
 
-MainTab:AddTextbox({
+RemoveTab:AddTextbox({
     Name = "Amount of Money to Remove",
     Default = "0",
     TextDisappear = false,
     Callback = function(Value)
-        moneyTextBox = tonumber(Value) or 0
+        removeMoneyTextBox = tonumber(Value) or 0
     end
 })
 
-MainTab:AddButton({
+RemoveTab:AddButton({
     Name = "Remove Money",
     Callback = function()
-        local recipientName = recipientTextBox
-        local moneyToRemove = moneyTextBox
+        local recipientName = searchUsernameTextBox
+        local moneyToRemove = removeMoneyTextBox
 
         local matchingPlayers = {}
 
