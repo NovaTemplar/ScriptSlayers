@@ -38,29 +38,18 @@ GetTycoon()
 OrionLib:MakeNotification({
     Name = "You logged in!",
     Content = "You logged in as "..Player.Name..".",
-    Image = "rbxassetid://14836421904",
+    Image = "rbxassetid://14828079730",
     Time = 5
 }) 
 
 local MainTab = Window:MakeTab({
     Name = "Main",
-    Icon = "rbxassetid://14848484384",
+    Icon = "rbxassetid://14828079730",
     PremiumOnly = false
 }) 
 
 local Section = MainTab:AddSection({
     Name = "Main Section"
-})
-
--- PVE & GunMod Tab
-local PveTab = Window:MakeTab({
-    Name = "PVE & GunMod",
-    Icon = "rbxassetid://14836534175", -- Replace with your icon ID
-    PremiumOnly = false
-})
-
-local PveSection = PveTab:AddSection({
-    Name = "PVE & GunMod Section"
 })
 
 local OtherTab = Window:MakeTab({
@@ -262,6 +251,17 @@ MainTab:AddToggle({
     end
 })
 
+-- PVE & GunMod Tab
+local PveTab = Window:MakeTab({
+    Name = "PVE & GunMod",
+    Icon = "rbxassetid://YOUR_ICON_ID", -- Replace with your icon ID
+    PremiumOnly = false
+})
+
+local PveSection = PveTab:AddSection({
+    Name = "PVE & GunMod Section"
+})
+
 PveSection:AddToggle({
     Name = "TP All Zombies",
     Default = false,
@@ -286,6 +286,66 @@ PveSection:AddToggle({
                     end)
                 end
             end)
+        end
+    end
+})
+
+PveSection:AddDropdown({
+    Name = "Which Weapon?",
+    Default = "Pistol",
+    Options = {"Pistol", "SMG", "AR", "Sniper"},
+    Callback = function(Value)
+        ChoosedWeapon = Value
+        print(Value)
+        
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "GunMod",
+            Text = Value .." Selected ! ( Be sure to not hold the weapon ! )",
+            Icon = "rbxassetid://6274377121",
+            Duration = 3
+        })
+    end
+})
+
+PveSection:AddDropdown({
+    Name = "Which Parameter?",
+    Default = "Damage",
+    Options = list_param_weapon,
+    Callback = function(Value)
+        print(Value)
+        param_weapon = Value
+        
+        game.StarterGui:SetCore("SendNotification", {
+            Title = ChoosedWeapon,
+            Text = Value .." Selected !",
+            Icon = "rbxassetid://6274377121",
+            Duration = 3
+        })
+    end
+})
+
+PveSection:AddBox({
+    Name = "How much?",
+    Type = "number",
+    Default = 1,
+    Callback = function(Value)
+        if lp.Backpack[ChoosedWeapon].Configuration[param_weapon] ~= nil then
+            lp.Backpack[ChoosedWeapon].Configuration[param_weapon].Value = Value
+            
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Magic !",
+                Text = "Have fun !",
+                Icon = "rbxassetid://6274377121",
+                Duration = 3
+            })
+            
+        else
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Mhh..",
+                Text = "Be sure to not hold the weapon! ( Contact me if it still doesn't work )",
+                Icon = "rbxassetid://6274377121",
+                Duration = 3
+            })
         end
     end
 })
