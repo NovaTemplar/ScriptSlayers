@@ -121,10 +121,9 @@ MainTab:AddButton({
                 end
             end
 
-            local recipientPlayerMoney = recipientPlayer.leaderstats.Money.Value
             OrionLib:MakeNotification({
                 Name = "Money Sent",
-                Content = "Successfully gave " .. recipientName .. " " .. money * multiplier .. " money. They now have " .. recipientPlayerMoney .. " money.",
+                Content = "Successfully gave " .. recipientName .. " " .. money * multiplier .. " money.",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
@@ -206,10 +205,9 @@ RemoveTab:AddButton({
                 end
             end
 
-            local recipientPlayerMoney = recipientPlayer.leaderstats.Money.Value
             OrionLib:MakeNotification({
                 Name = "Money Removed",
-                Content = "Successfully removed " .. moneyToRemove .. " money from " .. recipientName .. ". They now have " .. recipientPlayerMoney .. " money.",
+                Content = "Successfully removed " .. moneyToRemove .. " money from " .. recipientName .. ".",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
