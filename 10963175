@@ -1,0 +1,94 @@
+-- Load the Orion library
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+-- Get the local player
+local Player = game.Players.LocalPlayer
+
+-- Create the main window
+local Window = OrionLib:MakeWindow({
+    Name = "Kyro - By Nova",
+    IntroText = "Kyro",
+    HidePremium = false,
+    SaveConfig = false,
+    ConfigFolder = "ScriptSlayers"
+})
+
+-- Create a notification to indicate login
+OrionLib:MakeNotification({
+    Name = "You logged in!",
+    Content = "You logged in as " .. Player.Name .. ".",
+    Image = "rbxassetid://14836421904",
+    Time = 5
+})
+
+-- Create the main tab
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://14828079730",
+    PremiumOnly = false
+})
+
+-- Create a section in the main tab
+local Section = MainTab:AddSection({
+    Name = "Main Section"
+})
+
+-- Create the Other tab
+local OtherTab = Window:MakeTab({
+    Name = "Other's",
+    Icon = "rbxassetid://14828080427",
+    PremiumOnly = false
+})
+
+-- Create a section in the Other tab
+local Section = OtherTab:AddSection({
+    Name = "Others Section"
+})
+
+-- Create a textbox for entering the amount of money
+local moneyTextBox
+Section:AddTextbox({
+    Name = "Money Amount",
+    Default = "0", -- Default value in the textbox
+    Callback = function(Value)
+        moneyTextBox = tonumber(Value) -- Store the entered value as a number
+    end
+})
+
+-- Create a button to give money
+Section:AddButton({
+    Name = "Give Money",
+    Callback = function()
+        -- Check if the moneyTextBox is valid (a number)
+        if moneyTextBox and type(moneyTextBox) == "number" then
+            -- Find the player's tycoon and give them money
+            local children = workspace.Tycoons:GetChildren()
+            for i, child in ipairs(children) do
+                if child.Info.Owner.Value == game.Players.LocalPlayer.Name then
+                    child.Control.Money:FireServer(moneyTextBox)
+                end
+            end
+        else
+            warn("Invalid money amount entered.")
+        end
+    end
+})
+
+-- Create a button for running admin commands
+OtherTab:AddButton({
+    Name = "Admin Cmd",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'), true))()
+    end
+})
+
+-- Create a button to exit the script
+OtherTab:AddButton({
+    Name = "Exit",
+    Callback = function()
+        OrionLib:Destroy()
+    end
+})
+
+-- Initialize the Orion library
+OrionLib:Init()
