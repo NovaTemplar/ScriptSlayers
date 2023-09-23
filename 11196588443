@@ -85,23 +85,27 @@ local Esp = false
 
 local function ESPALL()
     while Esp do
-        local players = game.Players:GetPlayers()
+while Esp do
+    local players = game.Players:GetPlayers()
 
-            for _, player in pairs(players) do
+    for _, player in pairs(players) do
 
-                local highlight = Instance.new("Highlight")
+        local highlight = Instance.new("Highlight")
 
-                highlight.Parent = player.Character
+        highlight.Parent = player.Character
 
-                highlight.Adornee = player.Character
+        highlight.Adornee = player.Character
 
-                highlight.OutlineColor = Color3.new(1, 1, 1)
+        highlight.OutlineColor = Color3.fromRGB(255, 0, 255)
 
-                highlight.OutlineTransparency = 0
+        highlight.OutlineTransparency = 0
 
-                highlight.SurfaceColor = Color3.new(1, 1, 1)
-        wait(5)
-        end
+        -- Add a print statement here to see if the script is running.
+
+        print("Highlighting player: " .. player.Name)
+    end
+
+    wait(1)
     end
 end
 
