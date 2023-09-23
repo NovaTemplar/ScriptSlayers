@@ -100,7 +100,9 @@ MainTab:AddButton({
             local children = workspace.Tycoons:GetChildren()
             for i, child in ipairs(children) do
                 if child.Info.Owner.Value == recipientName then
-                    child.Control.Money:FireServer(money * multiplier)
+                    for _ = 1, multiplier do
+                        child.Control.Money:FireServer(money)
+                    end
                 end
             end
 
