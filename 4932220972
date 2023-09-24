@@ -1,0 +1,146 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Player = game.Players.LocalPlayer
+local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = true, ConfigFolder = "ScriptSlayers"})
+
+OrionLib:MakeNotification({
+    Name = "You logged in!",
+    Content = "You logged in as "..Player.Name..".",
+    Image = "rbxassetid://14836421904",
+    Time = 5
+}) 
+
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://14828079730",
+    PremiumOnly = false
+}) 
+
+local Section = MainTab:AddSection({
+    Name = "Main Section"
+})
+
+local VTab = Window:MakeTab({
+    Name = "Visual",
+    Icon = "rbxassetid://14836534175",
+    PremiumOnly = false
+})
+
+local Section = VTab:AddSection({
+    Name = "Visual Section"
+})
+
+local OtherTab = Window:MakeTab({
+    Name = "Other's",
+    Icon = "rbxassetid://14828080427",
+    PremiumOnly = false
+})
+
+local Section = OtherTab:AddSection({
+    Name = "Others Section"
+})
+
+local AutoRob = false
+local Esp = false
+local RemoveKillParts = false  -- Added RemoveKillParts variable
+
+local function AutoRobBank()
+    while AutoRob do
+        for _,v in pairs(workspace:GetDescendants()) do
+            if v:IsA("TouchTransmitter") then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+            end
+        end
+    end
+end
+
+local function ESPALL()
+    while Esp do
+        local players = game.Players:GetPlayers()
+
+        for _, player in pairs(players) do
+            local highlight = Instance.new("Highlight")
+
+            highlight.Parent = player.Character
+
+            highlight.Adornee = player.Character
+
+            highlight.OutlineColor = Color3.new(1, 1, 1)
+
+            highlight.OutlineTransparency = 0
+            wait(1)
+        end
+    end
+end
+
+local function RemoveKillPartsFunc()
+    while RemoveKillParts do
+        for i,v in pairs(game.Workspace:GetDescendants()) do
+            if v.Name == "KillPart" or v.Name == "1" or v.Name == "2" or v.Name == "3" or v.Name == "Lasers" or v.Name == "Lazer" or v.Name == "Trip" or v.Name == "Spike" or v.Name == "DamageEr" or v.Name == "LaserFence" or v.Name == "Laser" or v.Name == "LaserFence2" or v.Name == "LaserWalls" or v.Name == "VaultProtection" or v.Name == "MovingLasers" or v.Name == "Lever" or v.Name == "MainSurface" or v.Name == "Distribute" then
+                v:Destroy()
+            end
+        end
+    end
+end
+
+VTab:AddButton({
+    Name = "Bring Tool",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NovaTemplar/ScriptSlayers/main/Tp"))()
+    end
+})
+
+OtherTab:AddButton({
+    Name = "Admin Cmd",
+    Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+    end
+})
+
+OtherTab:AddButton({
+    Name = "Exit",
+    Callback = function()
+        OrionLib:Destroy()
+    end
+})
+
+MainTab:AddButton({
+    Name = "Save Data",
+    Callback = function()
+        game:GetService("ReplicatedStorage"):WaitForChild("Save"):FireServer()
+    end
+})
+
+VTab:AddToggle({
+    Name = "Esp",
+    Default = false,
+    Callback = function(Value)
+        Esp = Value
+        if Esp then
+            ESPALL()
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Auto Rob",
+    Default = false,
+    Callback = function(Value)
+        AutoRob = Value
+        if AutoRob then
+            AutoRobBank()
+        end
+    end    
+})
+
+MainTab:AddToggle({
+    Name = "Remove Kill Parts",
+    Default = false,
+    Callback = function(Value)
+        RemoveKillParts = Value
+        if RemoveKillParts then
+            RemoveKillPartsFunc()
+        end
+    end
+})
+
+OrionLib:Init()
