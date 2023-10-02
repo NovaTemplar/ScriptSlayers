@@ -288,7 +288,7 @@ end
 updatePlayerMenu()
 
 -- Update the player menu every minute
-while wait(60) do
+while wait(1) do
     updatePlayerMenu()
 end
 
