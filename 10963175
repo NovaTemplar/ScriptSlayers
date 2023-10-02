@@ -54,7 +54,9 @@ OtherTab:AddButton({
     Name = "Admin Cmd",
     Callback = function()
         loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'), true))()
-14858509415
+    end
+})
+
 OtherTab:AddButton({
     Name = "SimpleSpy",
     Callback = function()
@@ -118,36 +120,16 @@ MainSection:AddButton({
             end
         end
 
-        if #matchingPlayers == 1 then
-            local recipientPlayer = matchingPlayers[1]
-            recipientName = recipientPlayer.Name
-
-            -- Ensure the total money to give doesn't exceed the game's limit
-            local maxMoneyPerTransaction = 10000
-            local totalMoneyToGive = money * multiplier
-            local numTransactions = math.ceil(totalMoneyToGive / maxMoneyPerTransaction)
-
-            for _ = 1, numTransactions do
-                local amountToGive = math.min(maxMoneyPerTransaction, totalMoneyToGive)
-                totalMoneyToGive = totalMoneyToGive - amountToGive
-
-                local children = workspace.Tycoons:GetChildren()
-                for i, child in ipairs(children) do
-                    if child.Info.Owner.Value == recipientName then
-                        child.Control.Money:FireServer(amountToGive)
-                        wait(1) -- Wait for 1 second between transactions
-                    end
-                end
-            end
-
+        if #matchingPlayers == 0 then
+            -- No matching players found, send an error notification
             OrionLib:MakeNotification({
-                Name = "Money Sent",
-                Content = "Successfully gave " .. recipientName .. " " .. money * multiplier .. " money.",
+                Name = "Player Not Found",
+                Content = "No player found with a similar username.",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
         elseif #matchingPlayers > 1 then
-            -- Multiple matching players found, cannot determine recipient
+            -- Multiple matching players found, send an error notification
             OrionLib:MakeNotification({
                 Name = "Multiple Matches Found",
                 Content = "Multiple players found with similar usernames. Be more specific.",
@@ -155,10 +137,24 @@ MainSection:AddButton({
                 Time = 5
             })
         else
-            -- No matching players found
+            -- One player found, initiate teleportation
+            local targetPlayer = matchingPlayers[1]
+
+            -- Send a notification about teleportation initiation
             OrionLib:MakeNotification({
-                Name = "Player Not Found",
-                Content = "No player found with a similar username.",
+                Name = "Teleporting...",
+                Content = "Teleporting to " .. targetPlayer.Name .. "...",
+                Image = "rbxassetid://14836421904",
+                Time = 2
+            })
+
+            -- Teleport your player to the target player's position
+            teleportToPlayer(targetPlayer.Name)
+
+            -- Send a notification about successful teleportation
+            OrionLib:MakeNotification({
+                Name = "Teleport Successful",
+                Content = "Successfully teleported to " .. targetPlayer.Name .. ".",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
@@ -202,9 +198,25 @@ RemoveSection:AddButton({
             end
         end
 
-        if #matchingPlayers == 1 then
-            local recipientPlayer = matchingPlayers[1]
-            recipientName = recipientPlayer.Name
+        if #matchingPlayers == 0 then
+            -- No matching players found, send an error notification
+            OrionLib:MakeNotification({
+                Name = "Player Not Found",
+                Content = "No player found with a similar username.",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        elseif #matchingPlayers > 1 then
+            -- Multiple matching players found, send an error notification
+            OrionLib:MakeNotification({
+                Name = "Multiple Matches Found",
+                Content = "Multiple players found with similar usernames. Be more specific.",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        else
+            -- One player found, initiate money removal
+            local targetPlayer = matchingPlayers[1]
 
             -- Ensure the total money to remove doesn't exceed the game's limit
             local maxMoneyPerTransaction = 10000
@@ -217,32 +229,16 @@ RemoveSection:AddButton({
 
                 local children = workspace.Tycoons:GetChildren()
                 for i, child in ipairs(children) do
-                    if child.Info.Owner.Value == recipientName then
+                    if child.Info.Owner.Value == targetPlayer.Name then
                         child.Control.Money:FireServer(-amountToRemove)
-                        wait(0.1) -- Wait for 0.1 second between transactions
+                        wait(0.1) -- Wait for 0.1 seconds between transactions
                     end
                 end
             end
 
             OrionLib:MakeNotification({
                 Name = "Money Removed",
-                Content = "Successfully removed " .. moneyToRemove .. " money from " .. recipientName .. ".",
-                Image = "rbxassetid://14836421904",
-                Time = 5
-            })
-        elseif #matchingPlayers > 1 then
-            -- Multiple matching players found, cannot determine recipient
-            OrionLib:MakeNotification({
-                Name = "Multiple Matches Found",
-                Content = "Multiple players found with similar usernames. Be more specific.",
-                Image = "rbxassetid://14836421904",
-                Time = 5
-            })
-        else
-            -- No matching players found
-            OrionLib:MakeNotification({
-                Name = "Player Not Found",
-                Content = "No player found with a similar username.",
+                Content = "Successfully removed " .. moneyToRemove .. " money from " .. targetPlayer.Name .. ".",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
@@ -250,9 +246,7 @@ RemoveSection:AddButton({
     end
 })
 
-
-local playerTextBox
-
+-- Teleport Tab
 local TeleportTab = Window:MakeTab({
     Name = "Teleport",
     Icon = "rbxassetid://14858509415", -- Replace with your icon ID
@@ -263,6 +257,9 @@ local TeleportSection = TeleportTab:AddSection({
     Name = "Teleport Section"
 })
 
+local playerTextBox
+local teleportButton
+
 TeleportSection:AddTextbox({
     Name = "Player Name",
     Default = "",
@@ -272,37 +269,23 @@ TeleportSection:AddTextbox({
     end
 })
 
-local function teleportToPlayer(playerName)
-    local targetPlayer = game.Players:FindFirstChild(playerName, true)
-    
-    if targetPlayer then
-        local targetCharacter = targetPlayer.Character
-        local targetHumanoidRootPart = targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart")
-        
-        if targetCharacter and targetHumanoidRootPart then
-            game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(targetHumanoidRootPart.CFrame)
-        else
-            warn("Target player does not have a valid character.")
-        end
-    else
-        warn("Player not found.")
-    end
-end
-
-TeleportSection:AddButton({
+teleportButton = TeleportSection:AddButton({
     Name = "Teleport",
     Callback = function()
         local playerName = playerTextBox
+
         local matchingPlayers = {}
         local players = game.Players:GetPlayers()
-        
+
+        -- Find players whose usernames contain the specified name
         for _, player in pairs(players) do
             if string.find(player.Name:lower(), playerName:lower()) then
                 table.insert(matchingPlayers, player)
             end
         end
-        
+
         if #matchingPlayers == 0 then
+            -- No matching players found, send an error notification
             OrionLib:MakeNotification({
                 Name = "Player Not Found",
                 Content = "No player found with a similar username.",
@@ -310,6 +293,7 @@ TeleportSection:AddButton({
                 Time = 5
             })
         elseif #matchingPlayers > 1 then
+            -- Multiple matching players found, send an error notification
             OrionLib:MakeNotification({
                 Name = "Multiple Matches Found",
                 Content = "Multiple players found with similar usernames. Be more specific.",
@@ -317,17 +301,21 @@ TeleportSection:AddButton({
                 Time = 5
             })
         else
+            -- One player found, initiate teleportation
             local targetPlayer = matchingPlayers[1]
-            
+
+            -- Send a notification about teleportation initiation
             OrionLib:MakeNotification({
                 Name = "Teleporting...",
                 Content = "Teleporting to " .. targetPlayer.Name .. "...",
                 Image = "rbxassetid://14836421904",
                 Time = 2
             })
-            
+
+            -- Teleport your player to the target player's position
             teleportToPlayer(targetPlayer.Name)
-            
+
+            -- Send a notification about successful teleportation
             OrionLib:MakeNotification({
                 Name = "Teleport Successful",
                 Content = "Successfully teleported to " .. targetPlayer.Name .. ".",
@@ -338,5 +326,30 @@ TeleportSection:AddButton({
     end
 })
 
+-- ... (existing code)
 
+-- Function to teleport your player to another player's location
+local function teleportToPlayer(playerName)
+    -- Find the player by their name (case insensitive search).
+    local targetPlayer = game.Players:FindFirstChild(playerName, true)
+
+    -- Check if the target player exists.
+    if targetPlayer then
+        -- Get the target player's character and humanoid root part.
+        local targetCharacter = targetPlayer.Character
+        local targetHumanoidRootPart = targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart")
+
+        -- Check if the target player's character and humanoid root part exist.
+        if targetCharacter and targetHumanoidRootPart then
+            -- Teleport your player to the target player's position.
+            game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(targetHumanoidRootPart.CFrame)
+        else
+            warn("Target player does not have a valid character.")
+        end
+    else
+        warn("Player not found.")
+    end
+end
+
+-- Initialize OrionLib
 OrionLib:Init()
