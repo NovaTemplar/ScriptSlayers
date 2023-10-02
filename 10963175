@@ -12,7 +12,7 @@ OrionLib:MakeNotification({
 
 local MainTab = Window:MakeTab({
     Name = "Add",
-    Icon = "rbxassetid://14858459736",
+    Icon = "rbxassetid://14950637720",
     PremiumOnly = false
 })
 
@@ -22,7 +22,7 @@ local MainSection = MainTab:AddSection({
 
 local RemoveTab = Window:MakeTab({
     Name = "Remove",
-    Icon = "rbxassetid://14858459736",
+    Icon = "rbxassetid://14950639707",
     PremiumOnly = false
 })
 
@@ -33,7 +33,7 @@ local RemoveSection = RemoveTab:AddSection({
 -- Teleport Tab
 local TeleportTab = Window:MakeTab({
     Name = "Teleport",
-    Icon = "rbxassetid://14836421904", -- Replace with your icon ID
+    Icon = "rbxassetid://14950591240", -- Replace with your icon ID
     PremiumOnly = false
 })
 
@@ -43,7 +43,7 @@ local TeleportSection = TeleportTab:AddSection({
 
 local OtherTab = Window:MakeTab({
     Name = "Other's",
-    Icon = "rbxassetid://14858509415",
+    Icon = "rbxassetid://14950644041",
     PremiumOnly = false
 })
 
@@ -53,7 +53,7 @@ local OtherSection = OtherTab:AddSection({
 
 local SettingTab = Window:MakeTab({
     Name = "Settings",
-    Icon = "rbxassetid://14858471173",
+    Icon = "rbxassetid://14950642126",
     PremiumOnly = false
 })
 
