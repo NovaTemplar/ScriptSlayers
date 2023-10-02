@@ -106,6 +106,70 @@ MainSection:AddTextbox({
     end
 })
 
+MainSection:AddButton({
+    Name = "Give Money",
+    Callback = function()
+        local recipientName = recipientTextBox
+        local money = moneyTextBox
+        local multiplier = multiplierDropdown
+
+        local matchingPlayers = {}
+
+        -- Find players whose usernames contain the recipient name
+        for _, player in pairs(game.Players:GetPlayers()) do
+            if string.find(player.Name:lower(), recipientName:lower()) then
+                table.insert(matchingPlayers, player)
+            end
+        end
+
+        if #matchingPlayers == 1 then
+            local recipientPlayer = matchingPlayers[1]
+            recipientName = recipientPlayer.Name
+
+            -- Ensure the total money to give doesn't exceed the game's limit
+            local maxMoneyPerTransaction = 10000
+            local totalMoneyToGive = money * multiplier
+            local numTransactions = math.ceil(totalMoneyToGive / maxMoneyPerTransaction)
+
+            for _ = 1, numTransactions do
+                local amountToGive = math.min(maxMoneyPerTransaction, totalMoneyToGive)
+                totalMoneyToGive = totalMoneyToGive - amountToGive
+
+                local children = workspace.Tycoons:GetChildren()
+                for i, child in ipairs(children) do
+                    if child.Info.Owner.Value == recipientName then
+                        child.Control.Money:FireServer(amountToGive)
+                        wait(1) -- Wait for 1 second between transactions
+                    end
+                end
+            end
+
+            OrionLib:MakeNotification({
+                Name = "Money Sent",
+                Content = "Successfully gave " .. recipientName .. " " .. money * multiplier .. " money.",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        elseif #matchingPlayers > 1 then
+            -- Multiple matching players found, cannot determine recipient
+            OrionLib:MakeNotification({
+                Name = "Multiple Matches Found",
+                Content = "Multiple players found with similar usernames. Be more specific.",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        else
+            -- No matching players found
+            OrionLib:MakeNotification({
+                Name = "Player Not Found",
+                Content = "No player found with a similar username.",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        end
+    end
+})
+
 MainSection:AddDropdown({
     Name = "Multiplier",
     Options = multipliers,
@@ -133,6 +197,69 @@ RemoveSection:AddTextbox({
     TextDisappear = false,
     Callback = function(Value)
         removeMoneyTextBox = tonumber(Value) or 0
+    end
+})
+
+RemoveSection:AddButton({
+    Name = "Remove Money",
+    Callback = function()
+        local recipientName = searchUsernameTextBox
+        local moneyToRemove = removeMoneyTextBox
+
+        local matchingPlayers = {}
+
+        -- Find players whose usernames contain the recipient name
+        for _, player in pairs(game.Players:GetPlayers()) do
+            if string.find(player.Name:lower(), recipientName:lower()) then
+                table.insert(matchingPlayers, player)
+            end
+        end
+
+        if #matchingPlayers == 1 then
+            local recipientPlayer = matchingPlayers[1]
+            recipientName = recipientPlayer.Name
+
+            -- Ensure the total money to remove doesn't exceed the game's limit
+            local maxMoneyPerTransaction = 10000
+            local totalMoneyToRemove = moneyToRemove
+            local numTransactions = math.ceil(totalMoneyToRemove / maxMoneyPerTransaction)
+
+            for _ = 1, numTransactions do
+                local amountToRemove = math.min(maxMoneyPerTransaction, totalMoneyToRemove)
+                totalMoneyToRemove = totalMoneyToRemove - amountToRemove
+
+                local children = workspace.Tycoons:GetChildren()
+                for i, child in ipairs(children) do
+                    if child.Info.Owner.Value == recipientName then
+                        child.Control.Money:FireServer(-amountToRemove)
+                        wait(0.1) -- Wait for 0.1 second between transactions
+                    end
+                end
+            end
+
+            OrionLib:MakeNotification({
+                Name = "Money Removed",
+                Content = "Successfully removed " .. moneyToRemove .. " money from " .. recipientName .. ".",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        elseif #matchingPlayers > 1 then
+            -- Multiple matching players found, cannot determine recipient
+            OrionLib:MakeNotification({
+                Name = "Multiple Matches Found",
+                Content = "Multiple players found with similar usernames. Be more specific.",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        else
+            -- No matching players found
+            OrionLib:MakeNotification({
+                Name = "Player Not Found",
+                Content = "No player found with a similar username.",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        end
     end
 })
 
