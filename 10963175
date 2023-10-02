@@ -252,7 +252,6 @@ RemoveSection:AddButton({
     end
 })
 
--- Teleport Tab
 local TeleportTab = Window:MakeTab({
     Name = "Teleport",
     Icon = "rbxassetid://14858509415", -- Replace with your icon ID
@@ -263,58 +262,75 @@ local TeleportSection = TeleportTab:AddSection({
     Name = "Teleport Section"
 })
 
-local playerMenu = TeleportSection:AddDropdown({
-    Name = "Select Player",
-    Default = "", -- No default selection initially
-    Options = playerMenuOptions, -- Use the playerMenuOptions table for options
+local playerTextBox
+local teleportButton
+
+TeleportSection:AddTextbox({
+    Name = "Player Name",
+    Default = "",
+    TextDisappear = false,
     Callback = function(Value)
-        -- Teleport code goes here
-        teleportToPlayer(Value)
+        playerTextBox = Value
     end
 })
 
-local function updatePlayerMenu()
-    playerMenuOptions = {} -- Clear the previous player names
+teleportButton = TeleportSection:AddButton({
+    Name = "Teleport",
+    Callback = function()
+        local playerName = playerTextBox
 
-    local players = game.Players:GetPlayers()
+        local matchingPlayers = {}
+        local players = game.Players:GetPlayers()
 
-    for _, player in pairs(players) do
-        table.insert(playerMenuOptions, player.Name)
-    end
-
-    playerMenu:SetOptions(playerMenuOptions) -- Update the dropdown menu with the new options
-end
-
--- Initialize the player menu
-updatePlayerMenu()
-
--- Update the player menu every minute
-while wait(10) do
-    updatePlayerMenu()
-end
-
--- Function to teleport your player to another player's location
-local function teleportToPlayer(playerName)
-    -- Find the player by their name (case insensitive search).
-    local targetPlayer = game.Players:FindFirstChild(playerName, true)
-
-    -- Check if the target player exists.
-    if targetPlayer then
-        -- Get the target player's character and humanoid root part.
-        local targetCharacter = targetPlayer.Character
-        local targetHumanoidRootPart = targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart")
-
-        -- Check if the target player's character and humanoid root part exist.
-        if targetCharacter and targetHumanoidRootPart then
-            -- Teleport your player to the target player's position.
-            game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(targetHumanoidRootPart.CFrame)
-        else
-            warn("Target player does not have a valid character.")
+        -- Find players whose usernames contain the specified name
+        for _, player in pairs(players) do
+            if string.find(player.Name:lower(), playerName:lower()) then
+                table.insert(matchingPlayers, player)
+            end
         end
-    else
-        warn("Player not found.")
-    end
-end
 
--- Initialize OrionLib
+        if #matchingPlayers == 0 then
+            -- No matching players found, send an error notification
+            OrionLib:MakeNotification({
+                Name = "Player Not Found",
+                Content = "No player found with a similar username.",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        elseif #matchingPlayers > 1 then
+            -- Multiple matching players found, send an error notification
+            OrionLib:MakeNotification({
+                Name = "Multiple Matches Found",
+                Content = "Multiple players found with similar usernames. Be more specific.",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        else
+            -- One player found, initiate teleportation
+            local targetPlayer = matchingPlayers[1]
+
+            -- Send a notification about teleportation initiation
+            OrionLib:MakeNotification({
+                Name = "Teleporting...",
+                Content = "Teleporting to " .. targetPlayer.Name .. "...",
+                Image = "rbxassetid://14836421904",
+                Time = 2 -- This is the initial notification delay
+            })
+
+            wait(2) -- Wait for 2 seconds before teleporting
+
+            -- Teleport your player to the target player's position
+            teleportToPlayer(targetPlayer.Name)
+
+            -- Send a notification about successful teleportation
+            OrionLib:MakeNotification({
+                Name = "Teleport Successful",
+                Content = "Successfully teleported to " .. targetPlayer.Name .. ".",
+                Image = "rbxassetid://14836421904",
+                Time = 5
+            })
+        end
+    end
+})
+
 OrionLib:Init()
