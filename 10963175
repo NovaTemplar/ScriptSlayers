@@ -265,8 +265,8 @@ local TeleportSection = TeleportTab:AddSection({
 
 local playerMenu = TeleportSection:AddDropdown({
     Name = "Select Player",
-    Options = {}, -- Initially empty, will be populated later
-    Default = "",
+    Default = "", -- No default selection initially
+    Options = playerMenuOptions, -- Use the playerMenuOptions table for options
     Callback = function(Value)
         -- Teleport code goes here
         teleportToPlayer(Value)
@@ -274,21 +274,22 @@ local playerMenu = TeleportSection:AddDropdown({
 })
 
 local function updatePlayerMenu()
-    local playerNames = {}
+    playerMenuOptions = {} -- Clear the previous player names
+
     local players = game.Players:GetPlayers()
 
     for _, player in pairs(players) do
-        table.insert(playerNames, player.Name)
+        table.insert(playerMenuOptions, player.Name)
     end
 
-    playerMenu:SetOptions(playerNames)
+    playerMenu:SetOptions(playerMenuOptions) -- Update the dropdown menu with the new options
 end
 
 -- Initialize the player menu
 updatePlayerMenu()
 
 -- Update the player menu every minute
-while wait(1) do
+while wait(10) do
     updatePlayerMenu()
 end
 
