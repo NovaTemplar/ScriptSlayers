@@ -54,9 +54,7 @@ OtherTab:AddButton({
     Name = "Admin Cmd",
     Callback = function()
         loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'), true))()
-    end
-})
-
+14858509415
 OtherTab:AddButton({
     Name = "SimpleSpy",
     Callback = function()
@@ -252,6 +250,9 @@ RemoveSection:AddButton({
     end
 })
 
+
+local playerTextBox
+
 local TeleportTab = Window:MakeTab({
     Name = "Teleport",
     Icon = "rbxassetid://14858509415", -- Replace with your icon ID
@@ -262,9 +263,6 @@ local TeleportSection = TeleportTab:AddSection({
     Name = "Teleport Section"
 })
 
-local playerTextBox
-local teleportButton
-
 TeleportSection:AddTextbox({
     Name = "Player Name",
     Default = "",
@@ -274,24 +272,37 @@ TeleportSection:AddTextbox({
     end
 })
 
-teleportButton = TeleportSection:AddButton({
-teleportButton = TeleportSection:AddButton({
+local function teleportToPlayer(playerName)
+    local targetPlayer = game.Players:FindFirstChild(playerName, true)
+    
+    if targetPlayer then
+        local targetCharacter = targetPlayer.Character
+        local targetHumanoidRootPart = targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart")
+        
+        if targetCharacter and targetHumanoidRootPart then
+            game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(targetHumanoidRootPart.CFrame)
+        else
+            warn("Target player does not have a valid character.")
+        end
+    else
+        warn("Player not found.")
+    end
+end
+
+TeleportSection:AddButton({
     Name = "Teleport",
     Callback = function()
         local playerName = playerTextBox
-
         local matchingPlayers = {}
         local players = game.Players:GetPlayers()
-
-        -- Find players whose usernames contain the specified name
+        
         for _, player in pairs(players) do
             if string.find(player.Name:lower(), playerName:lower()) then
                 table.insert(matchingPlayers, player)
             end
         end
-
+        
         if #matchingPlayers == 0 then
-            -- No matching players found, send an error notification
             OrionLib:MakeNotification({
                 Name = "Player Not Found",
                 Content = "No player found with a similar username.",
@@ -299,7 +310,6 @@ teleportButton = TeleportSection:AddButton({
                 Time = 5
             })
         elseif #matchingPlayers > 1 then
-            -- Multiple matching players found, send an error notification
             OrionLib:MakeNotification({
                 Name = "Multiple Matches Found",
                 Content = "Multiple players found with similar usernames. Be more specific.",
@@ -307,21 +317,17 @@ teleportButton = TeleportSection:AddButton({
                 Time = 5
             })
         else
-            -- One player found, initiate teleportation
             local targetPlayer = matchingPlayers[1]
-
-            -- Send a notification about teleportation initiation
+            
             OrionLib:MakeNotification({
                 Name = "Teleporting...",
                 Content = "Teleporting to " .. targetPlayer.Name .. "...",
                 Image = "rbxassetid://14836421904",
                 Time = 2
             })
-
-            -- Teleport your player to the target player's position
+            
             teleportToPlayer(targetPlayer.Name)
-
-            -- Send a notification about successful teleportation
+            
             OrionLib:MakeNotification({
                 Name = "Teleport Successful",
                 Content = "Successfully teleported to " .. targetPlayer.Name .. ".",
@@ -331,5 +337,6 @@ teleportButton = TeleportSection:AddButton({
         end
     end
 })
+
 
 OrionLib:Init()
