@@ -8,7 +8,6 @@ local Mouse = LocalPlayer:GetMouse()
 local HttpService = game:GetService("HttpService")
 
 local OrionLib = {
-local OrionLib = {
 	Elements = {},
 	ThemeObjects = {},
 	Connections = {},
