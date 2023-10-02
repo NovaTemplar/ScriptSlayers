@@ -221,7 +221,7 @@ RemoveSection:AddButton({
                 for i, child in ipairs(children) do
                     if child.Info.Owner.Value == recipientName then
                         child.Control.Money:FireServer(-amountToRemove)
-                        wait(0.1) -- Wait for 1 second between transactions
+                        wait(0.1) -- Wait for 0.1 second between transactions
                     end
                 end
             end
@@ -252,4 +252,68 @@ RemoveSection:AddButton({
     end
 })
 
+-- Teleport Tab
+local TeleportTab = Window:MakeTab({
+    Name = "Teleport",
+    Icon = "rbxassetid://14858509415", -- Replace with your icon ID
+    PremiumOnly = false
+})
+
+local TeleportSection = TeleportTab:AddSection({
+    Name = "Teleport Section"
+})
+
+local playerMenu = TeleportSection:AddDropdown({
+    Name = "Select Player",
+    Options = {}, -- Initially empty, will be populated later
+    Default = "",
+    Callback = function(Value)
+        -- Teleport code goes here
+        teleportToPlayer(Value)
+    end
+})
+
+local function updatePlayerMenu()
+    local playerNames = {}
+    local players = game.Players:GetPlayers()
+
+    for _, player in pairs(players) do
+        table.insert(playerNames, player.Name)
+    end
+
+    playerMenu:SetOptions(playerNames)
+end
+
+-- Initialize the player menu
+updatePlayerMenu()
+
+-- Update the player menu every minute
+while wait(60) do
+    updatePlayerMenu()
+end
+
+-- Function to teleport your player to another player's location
+local function teleportToPlayer(playerName)
+    -- Find the player by their name (case insensitive search).
+    local targetPlayer = game.Players:FindFirstChild(playerName, true)
+
+    -- Check if the target player exists.
+    if targetPlayer then
+        -- Get the target player's character and humanoid root part.
+        local targetCharacter = targetPlayer.Character
+        local targetHumanoidRootPart = targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart")
+
+        -- Check if the target player's character and humanoid root part exist.
+        if targetCharacter and targetHumanoidRootPart then
+            -- Teleport your player to the target player's position.
+            game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(targetHumanoidRootPart.CFrame)
+        else
+            warn("Target player does not have a valid character.")
+        end
+    else
+        warn("Player not found.")
+    end
+end
+
+-- Initialize OrionLib
 OrionLib:Init()
