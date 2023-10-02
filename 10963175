@@ -275,6 +275,7 @@ TeleportSection:AddTextbox({
 })
 
 teleportButton = TeleportSection:AddButton({
+teleportButton = TeleportSection:AddButton({
     Name = "Teleport",
     Callback = function()
         local playerName = playerTextBox
@@ -314,10 +315,8 @@ teleportButton = TeleportSection:AddButton({
                 Name = "Teleporting...",
                 Content = "Teleporting to " .. targetPlayer.Name .. "...",
                 Image = "rbxassetid://14836421904",
-                Time = 2 -- This is the initial notification delay
+                Time = 2
             })
-
-            wait(2) -- Wait for 2 seconds before teleporting
 
             -- Teleport your player to the target player's position
             teleportToPlayer(targetPlayer.Name)
