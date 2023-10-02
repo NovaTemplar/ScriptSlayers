@@ -30,6 +30,17 @@ local RemoveSection = RemoveTab:AddSection({
     Name = "Remove Section"
 })
 
+-- Teleport Tab
+local TeleportTab = Window:MakeTab({
+    Name = "Teleport",
+    Icon = "rbxassetid://14836421904", -- Replace with your icon ID
+    PremiumOnly = false
+})
+
+local TeleportSection = TeleportTab:AddSection({
+    Name = "Teleport Section"
+})
+
 local OtherTab = Window:MakeTab({
     Name = "Other's",
     Icon = "rbxassetid://14858509415",
@@ -147,17 +158,6 @@ local function teleportToPlayer(playerName)
         warn("Player not found.")
     end
 end
-
--- Teleport Tab
-local TeleportTab = Window:MakeTab({
-    Name = "Teleport",
-    Icon = "rbxassetid://14836421904", -- Replace with your icon ID
-    PremiumOnly = false
-})
-
-local TeleportSection = TeleportTab:AddSection({
-    Name = "Teleport Section"
-})
 
 local playerTextBox
 
