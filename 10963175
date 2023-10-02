@@ -151,7 +151,7 @@ end
 -- Teleport Tab
 local TeleportTab = Window:MakeTab({
     Name = "Teleport",
-    Icon = "rbxassetid://YOUR_ICON_ID_HERE", -- Replace with your icon ID
+    Icon = "rbxassetid://14858509415", -- Replace with your icon ID
     PremiumOnly = false
 })
 
