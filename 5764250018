@@ -192,7 +192,7 @@ MainSection:AddButton({
         local partialName = PlayerTextBox
         local selectedOption = tonumber(MultiplayerDropdown)
         
-        -- Check if a partial player name is specified and a multiplayer option is selected
+        -- Check if a partial name is specified and a multiplayer option is selected
         if partialName and selectedOption then
             local matchingPlayers = {}
             local players = game.Players:GetPlayers()
@@ -208,7 +208,7 @@ MainSection:AddButton({
                 -- No matching players found, send an error notification
                 OrionLib:MakeNotification({
                     Name = "Player Not Found",
-                    Content = "No player found with a similar name.",
+                    Content = "No player found with a similar username.",
                     Image = "rbxassetid://14836421904",
                     Time = 5
                 })
@@ -216,7 +216,7 @@ MainSection:AddButton({
                 -- Multiple matching players found, send an error notification
                 OrionLib:MakeNotification({
                     Name = "Multiple Matches Found",
-                    Content = "Multiple players found with similar names. Be more specific.",
+                    Content = "Multiple players found with similar usernames. Be more specific.",
                     Image = "rbxassetid://14836421904",
                     Time = 5
                 })
@@ -224,36 +224,21 @@ MainSection:AddButton({
                 -- One player found, initiate giving money
                 local targetPlayer = matchingPlayers[1]
 
-                -- Attempt to give money to the target player (you may need to replace this code with your actual money-giving code)
-                local success = true
+                -- Send the request to the server to give money to the player (modify this part)
                 for i = 1, selectedOption do
-                    -- Replace this line with your money-giving logic
-                    -- For example: success = GiveMoneyToPlayer(targetPlayer)
-                    if not success then
-                        break
-                    end
+                    game:GetService("ReplicatedStorage").Code:FireServer(targetPlayer) -- Modify this line to send the player as a parameter
                 end
 
-                if success then
-                    -- Send a notification about successful money transfer
-                    OrionLib:MakeNotification({
-                        Name = "Money Sent",
-                        Content = "Sent money to " .. targetPlayer.Name .. ".",
-                        Image = "rbxassetid://14836421904",
-                        Time = 5
-                    })
-                else
-                    -- Send an error notification if money transfer failed
-                    OrionLib:MakeNotification({
-                        Name = "Money Transfer Failed",
-                        Content = "Failed to send money to " .. targetPlayer.Name .. ".",
-                        Image = "rbxassetid://14836421904",
-                        Time = 5
-                    })
-                end
+                -- Send a notification about successful money transfer
+                OrionLib:MakeNotification({
+                    Name = "Money Transfer Successful",
+                    Content = "Successfully transferred money to " .. targetPlayer.Name .. ".",
+                    Image = "rbxassetid://14836421904",
+                    Time = 5
+                })
             end
         else
-            -- Handle the case where either the player name or multiplayer option is not selected
+            -- Handle the case where either the partial name or multiplayer option is not selected
             OrionLib:MakeNotification({
                 Name = "Invalid Input",
                 Content = "Please enter a partial player name and select a multiplayer option.",
