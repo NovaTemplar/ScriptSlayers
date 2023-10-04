@@ -12,13 +12,6 @@ OrionLib:MakeNotification({
     Time = 5
 })
 
--- Inf Money Tab
-local InfMoneyTab = Window:MakeTab({
-    Name = "Inf Money",
-    Icon = "rbxassetid://14963649534", -- Replace with your icon ID
-    PremiumOnly = false
-})
-
 -- Teleport Tab
 local TeleportTab = Window:MakeTab({
     Name = "Teleport",
@@ -166,6 +159,13 @@ local teleportButton = TeleportSection:AddButton({
     end
 })
 
+-- Inf Money Tab
+local InfMoneyTab = Window:MakeTab({
+    Name = "Inf Money",
+    Icon = "rbxassetid://1496364953414963649534", -- Replace with your icon ID
+    PremiumOnly = false
+})
+
 local RemovePopUpToggle
 local InfMoneyToggle
 
@@ -187,7 +187,7 @@ end
 
 local function disableRemovePopUp()
     -- Disable the code to remove PopUp
-    if RemovePopUpToggle.Connection then
+    if RemovePopUpToggle and RemovePopUpToggle.Connection then
         RemovePopUpToggle.Connection:Disconnect()
         RemovePopUpToggle.Connection = nil
     end
@@ -207,7 +207,7 @@ end
 
 local function disableInfMoney()
     -- Disable the code to fire the robbery server
-    if InfMoneyToggle.Timer then
+    if InfMoneyToggle and InfMoneyToggle.Timer then
         InfMoneyToggle.Timer:Disconnect()
         InfMoneyToggle.Timer = nil
     end
