@@ -166,53 +166,73 @@ local teleportButton = TeleportSection:AddButton({
     end
 })
 
-local RemovePopUpToggle = InfMoneyTab:AddToggle({
+local RemovePopUpToggle
+local InfMoneyToggle
+
+local function enableRemovePopUp()
+    -- Enable the code to remove PopUp
+    local rs = game:GetService("RunService")
+    local popUpConnection
+
+    popUpConnection = game.Players.LocalPlayer.PlayerGui.OnScreen.Stats.Pstat.ChildAdded:Connect(function(v)
+        if v.Name == "PopUp" then
+            rs.RenderStepped:wait()
+            v:Destroy()
+        end
+    end)
+
+    -- Store the connection so we can disconnect it when the toggle is turned off
+    RemovePopUpToggle.Connection = popUpConnection
+end
+
+local function disableRemovePopUp()
+    -- Disable the code to remove PopUp
+    if RemovePopUpToggle.Connection then
+        RemovePopUpToggle.Connection:Disconnect()
+        RemovePopUpToggle.Connection = nil
+    end
+end
+
+local function enableInfMoney()
+    -- Enable the code to fire the robbery server every 0.01 seconds
+    local rs = game:GetService("RunService")
+    local InfMoneyTimer
+    InfMoneyTimer = rs.RenderStepped:Connect(function()
+        game.ReplicatedStorage.RE.Robbery:FireServer()
+    end)
+
+    -- Store the timer so we can disconnect it when the toggle is turned off
+    InfMoneyToggle.Timer = InfMoneyTimer
+end
+
+local function disableInfMoney()
+    -- Disable the code to fire the robbery server
+    if InfMoneyToggle.Timer then
+        InfMoneyToggle.Timer:Disconnect()
+        InfMoneyToggle.Timer = nil
+    end
+end
+
+RemovePopUpToggle = InfMoneyTab:AddToggle({
     Name = "Remove PopUp",
     Default = false, -- Set the default state to off
     Callback = function(Value)
         if Value then
-            -- Enable the code to remove PopUp
-            local rs = game:GetService("RunService")
-            local popUpConnection
-
-            popUpConnection = game.Players.LocalPlayer.PlayerGui.OnScreen.Stats.Pstat.ChildAdded:Connect(function(v)
-                if v.Name == "PopUp" then
-                    rs.RenderStepped:wait()
-                    v:Destroy()
-                end
-            end)
-
-            -- Store the connection so we can disconnect it when the toggle is turned off
-            RemovePopUpToggle.Connection = popUpConnection
+            enableRemovePopUp()
         else
-            -- Disable the code to remove PopUp
-            if RemovePopUpToggle.Connection then
-                RemovePopUpToggle.Connection:Disconnect()
-                RemovePopUpToggle.Connection = nil
-            end
+            disableRemovePopUp()
         end
     end
 })
 
-local InfMoneyToggle = InfMoneyTab:AddToggle({
+InfMoneyToggle = InfMoneyTab:AddToggle({
     Name = "Inf Money",
     Default = false, -- Set the default state to off
     Callback = function(Value)
         if Value then
-            -- Enable the code to fire the robbery server every 0.01 seconds
-            local InfMoneyTimer
-            InfMoneyTimer = rs.RenderStepped:Connect(function()
-                game.ReplicatedStorage.RE.Robbery:FireServer()
-            end)
-
-            -- Store the timer so we can disconnect it when the toggle is turned off
-            InfMoneyToggle.Timer = InfMoneyTimer
+            enableInfMoney()
         else
-            -- Disable the code to fire the robbery server
-            if InfMoneyToggle.Timer then
-                InfMoneyToggle.Timer:Disconnect()
-                InfMoneyToggle.Timer = nil
-            end
+            disableInfMoney()
         end
     end
 })
