@@ -173,27 +173,54 @@ MainSection:AddDropdown({
     end
 })
 
--- Add a button in the Main Section to give money
+-- Add a textbox in the Main Section for specifying the player's username
+local PlayerTextBox
+
+MainSection:AddTextbox({
+    Name = "Player Name",
+    Default = "",
+    TextDisappear = false,
+    Callback = function(Value)
+        PlayerTextBox = Value
+    end
+})
+
+-- Add a button in the Main Section to give money to the specified player
 MainSection:AddButton({
-    Name = "Give Money",
+    Name = "Give Money to Player",
     Callback = function()
-        -- Check if MultiplayerDropdown is set
-        if MultiplayerDropdown then
-            local selectedOption = tonumber(MultiplayerDropdown)
-            for i = 1, selectedOption do
-                game:GetService("ReplicatedStorage").Code:FireServer()
+        local playerName = PlayerTextBox
+        local selectedOption = tonumber(MultiplayerDropdown)
+        
+        -- Check if a player name is specified and a multiplayer option is selected
+        if playerName and selectedOption then
+            local targetPlayer = game.Players:FindFirstChild(playerName, true)
+
+            if targetPlayer then
+                for i = 1, selectedOption do
+                    game:GetService("ReplicatedStorage").Code:FireServer()
+                end
+            else
+                -- Handle the case where the specified player is not found
+                OrionLib:MakeNotification({
+                    Name = "Player Not Found",
+                    Content = "Player '" .. playerName .. "' not found.",
+                    Image = "rbxassetid://14836421904",
+                    Time = 5
+                })
             end
         else
-            -- Handle the case where no option is selected
+            -- Handle the case where either the player name or multiplayer option is not selected
             OrionLib:MakeNotification({
-                Name = "No Option Selected",
-                Content = "Please select a multiplayer option first.",
+                Name = "Invalid Input",
+                Content = "Please enter a player name and select a multiplayer option.",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
         end
     end
 })
+
 
 
 -- Initialize OrionLib
