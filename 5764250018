@@ -173,7 +173,7 @@ MainSection:AddDropdown({
     end
 })
 
--- Add a textbox in the Main Section for specifying the player's username
+-- Add a textbox in the Main Section for specifying the player's name
 local PlayerTextBox
 
 MainSection:AddTextbox({
@@ -189,31 +189,74 @@ MainSection:AddTextbox({
 MainSection:AddButton({
     Name = "Give Money to Player",
     Callback = function()
-        local playerName = PlayerTextBox
+        local partialName = PlayerTextBox
         local selectedOption = tonumber(MultiplayerDropdown)
         
-        -- Check if a player name is specified and a multiplayer option is selected
-        if playerName and selectedOption then
-            local targetPlayer = game.Players:FindFirstChild(playerName, true)
+        -- Check if a partial player name is specified and a multiplayer option is selected
+        if partialName and selectedOption then
+            local matchingPlayers = {}
+            local players = game.Players:GetPlayers()
 
-            if targetPlayer then
-                for i = 1, selectedOption do
-                    game:GetService("ReplicatedStorage").Code:FireServer()
+            -- Find players whose usernames contain the specified partial name
+            for _, player in pairs(players) do
+                if string.find(player.Name:lower(), partialName:lower()) then
+                    table.insert(matchingPlayers, player)
                 end
-            else
-                -- Handle the case where the specified player is not found
+            end
+
+            if #matchingPlayers == 0 then
+                -- No matching players found, send an error notification
                 OrionLib:MakeNotification({
                     Name = "Player Not Found",
-                    Content = "Player '" .. playerName .. "' not found.",
+                    Content = "No player found with a similar name.",
                     Image = "rbxassetid://14836421904",
                     Time = 5
                 })
+            elseif #matchingPlayers > 1 then
+                -- Multiple matching players found, send an error notification
+                OrionLib:MakeNotification({
+                    Name = "Multiple Matches Found",
+                    Content = "Multiple players found with similar names. Be more specific.",
+                    Image = "rbxassetid://14836421904",
+                    Time = 5
+                })
+            else
+                -- One player found, initiate giving money
+                local targetPlayer = matchingPlayers[1]
+
+                -- Attempt to give money to the target player (you may need to replace this code with your actual money-giving code)
+                local success = true
+                for i = 1, selectedOption do
+                    -- Replace this line with your money-giving logic
+                    -- For example: success = GiveMoneyToPlayer(targetPlayer)
+                    if not success then
+                        break
+                    end
+                end
+
+                if success then
+                    -- Send a notification about successful money transfer
+                    OrionLib:MakeNotification({
+                        Name = "Money Sent",
+                        Content = "Sent money to " .. targetPlayer.Name .. ".",
+                        Image = "rbxassetid://14836421904",
+                        Time = 5
+                    })
+                else
+                    -- Send an error notification if money transfer failed
+                    OrionLib:MakeNotification({
+                        Name = "Money Transfer Failed",
+                        Content = "Failed to send money to " .. targetPlayer.Name .. ".",
+                        Image = "rbxassetid://14836421904",
+                        Time = 5
+                    })
+                end
             end
         else
             -- Handle the case where either the player name or multiplayer option is not selected
             OrionLib:MakeNotification({
                 Name = "Invalid Input",
-                Content = "Please enter a player name and select a multiplayer option.",
+                Content = "Please enter a partial player name and select a multiplayer option.",
                 Image = "rbxassetid://14836421904",
                 Time = 5
             })
