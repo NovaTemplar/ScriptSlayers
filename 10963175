@@ -93,6 +93,15 @@ MainSection:AddTextbox({
     end
 })
 
+MainSection:AddDropdown({
+    Name = "Multiplier",
+    Options = multipliers,
+    Default = multipliers[1],
+    Callback = function(Value)
+        multiplierDropdown = Value
+    end
+})
+
 MainSection:AddButton({
     Name = "Give Money",
     Callback = function()
@@ -154,15 +163,6 @@ MainSection:AddButton({
                 Time = 5
             })
         end
-    end
-})
-
-MainSection:AddDropdown({
-    Name = "Multiplier",
-    Options = multipliers,
-    Default = multipliers[1],
-    Callback = function(Value)
-        multiplierDropdown = Value
     end
 })
 
