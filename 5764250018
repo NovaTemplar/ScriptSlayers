@@ -160,7 +160,7 @@ local teleportButton = TeleportSection:AddButton({
     end
 })
 
--- Add a menu in the Main Section for multiplayer options
+-- Add a dropdown in the Main Section for multiplayer options
 local MultiplayerDropdown
 
 MainSection:AddDropdown({
@@ -168,33 +168,19 @@ MainSection:AddDropdown({
     Default = "1",
     Options = {"1", "10", "100", "200", "300", "400", "500", "600", "700", "800", "900", "1000", "5000", "10000"},
     Callback = function(Value)
-        -- Create or refresh the MultiplayerDropdown based on the selected value
-        if not MultiplayerDropdown then
-            MultiplayerDropdown = MainSection:AddDropdown({
-                Name = "Selected Multiplayer",
-                Default = Value,
-                Options = {"1", "2"},
-                Callback = function(SelectedValue)
-                    print("Selected Multiplayer: " .. SelectedValue)
-                end
-            })
-        else
-            MultiplayerDropdown:Refresh({"1", "2"}, true)
-            MultiplayerDropdown:Set(Value)
-        end
+        -- Store the selected multiplayer option
+        MultiplayerDropdown = Value
     end
 })
 
 -- Add a button in the Main Section to give money
--- Add a button in the Main Section to give money
 MainSection:AddButton({
     Name = "Give Money",
     Callback = function()
-        -- Check if MultiplayerDropdown exists and get the selected option
-        local selectedOption = MultiplayerDropdown and MultiplayerDropdown:GetSelected()
-
-        if selectedOption then
-            for i = 1, tonumber(selectedOption) do
+        -- Check if MultiplayerDropdown is set
+        if MultiplayerDropdown then
+            local selectedOption = tonumber(MultiplayerDropdown)
+            for i = 1, selectedOption do
                 game:GetService("ReplicatedStorage").Code:FireServer()
             end
         else
@@ -208,6 +194,7 @@ MainSection:AddButton({
         end
     end
 })
+
 
 -- Initialize OrionLib
 OrionLib:Init()
