@@ -15,14 +15,14 @@ OrionLib:MakeNotification({
 -- Inf Money Tab
 local InfMoneyTab = Window:MakeTab({
     Name = "Inf Money",
-    Icon = "rbxassetid://", -- Replace with your icon ID
+    Icon = "rbxassetid://14854526909", -- Replace with your icon ID
     PremiumOnly = false
 })
 
 -- Teleport Tab
 local TeleportTab = Window:MakeTab({
     Name = "Teleport",
-    Icon = "rbxassetid://14854526909", -- Replace with your icon ID
+    Icon = "rbxassetid://14950591240", -- Replace with your icon ID
     PremiumOnly = false
 })
 
