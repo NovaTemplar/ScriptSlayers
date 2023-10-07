@@ -49,11 +49,14 @@ local function AutoFuse()
     end
 end
 
+-- Define a variable to track the state of Auto Sell
+local isAutoSellEnabled = false
+
 -- Function for Auto Sell
 local function AutoSell()
     local itemIDs = {10042, 10041, 10069, 10063, 10065, 10064, 10066, 10068, 10051}
     while true do
-        if Section:GetToggleValue("Auto Sell") then
+        if isAutoSellEnabled then
             for _, itemID in pairs(itemIDs) do
                 local args = {
                     [1] = "sell",
@@ -68,7 +71,7 @@ local function AutoSell()
     end
 end
 
--- Add the toggles from the first script here
+-- Add the toggles for Auto Buy, Auto Fuse, and Auto Sell
 Section:AddToggle({
     Name = "Auto Buy",
     Default = false,
@@ -93,9 +96,7 @@ Section:AddToggle({
     Name = "Auto Sell",
     Default = false,
     Callback = function(Value)
-        if Value then
-            AutoSell()
-        end
+        isAutoSellEnabled = Value -- Update the variable based on the toggle state
     end
 })
 
