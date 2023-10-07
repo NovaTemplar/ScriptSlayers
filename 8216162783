@@ -92,4 +92,193 @@ Section:AddToggle({
     end
 })
 
+
+local AutoScamSection = MainTab:AddSection({
+    Name = "Auto Scam"
+})
+
+AutoScamSection:AddButton({
+    Name = "Auto Scam - 1",
+    Callback = function()
+        local args1 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate1"):WaitForChild("CancelBtns"):WaitForChild("Cancel"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate1")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args1))
+
+        wait(1) -- Wait for 1 second
+
+        local args2 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate1"):WaitForChild("AcceptBtns"):WaitForChild("Accept"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate1")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args2))
+    end
+})
+
+AutoScamSection:AddButton({
+    Name = "Auto Scam - 2",
+    Callback = function()
+        local args1 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate2"):WaitForChild("CancelBtns"):WaitForChild("Cancel"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate2")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args1))
+
+        wait(1) -- Wait for 1 second
+
+        local args2 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate2"):WaitForChild("AcceptBtns"):WaitForChild("Accept"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate2")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args2))
+    end
+})
+
+AutoScamSection:AddButton({
+    Name = "Auto Scam - 3",
+    Callback = function()
+        local args1 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate3"):WaitForChild("CancelBtns"):WaitForChild("Cancel"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate3")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args1))
+
+        wait(1) -- Wait for 1 second
+
+        local args2 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate3"):WaitForChild("AcceptBtns"):WaitForChild("Accept"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate3")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args2))
+    end
+})
+
+AutoScamSection:AddButton({
+    Name = "Auto Scam - 4",
+    Callback = function()
+        local args1 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate4"):WaitForChild("CancelBtns"):WaitForChild("Cancel"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate4")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args1))
+
+        wait(1) -- Wait for 1 second
+
+        local args2 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate4"):WaitForChild("AcceptBtns"):WaitForChild("Accept"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate4")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args2))
+    end
+})
+
+AutoScamSection:AddButton({
+    Name = "Auto Scam - 5",
+    Callback = function()
+        local args1 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate5"):WaitForChild("CancelBtns"):WaitForChild("Cancel"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate5")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args1))
+
+        wait(1) -- Wait for 1 second
+
+        local args2 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate5"):WaitForChild("AcceptBtns"):WaitForChild("Accept"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate5")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args2))
+    end
+})
+
+AutoScamSection:AddButton({
+    Name = "Auto Scam - 6",
+    Callback = function()
+        local args1 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate6"):WaitForChild("CancelBtns"):WaitForChild("Cancel"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate6")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args1))
+
+        wait(1) -- Wait for 1 second
+
+        local args2 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate6"):WaitForChild("AcceptBtns"):WaitForChild("Accept"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate6")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args2))
+    end
+})
+
+AutoScamSection:AddButton({
+    Name = "Auto Scam - 7",
+    Callback = function()
+        local args1 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate7"):WaitForChild("CancelBtns"):WaitForChild("Cancel"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate7")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args1))
+
+        wait(1) -- Wait for 1 second
+
+        local args2 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate7"):WaitForChild("AcceptBtns"):WaitForChild("Accept"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate7")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args2))
+    end
+})
+
+AutoScamSection:AddButton({
+    Name = "Auto Scam - 8",
+    Callback = function()
+        local args1 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate8"):WaitForChild("CancelBtns"):WaitForChild("Cancel"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate8")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args1))
+
+        wait(1) -- Wait for 1 second
+
+        local args2 = {
+            [1] = "plate_event",
+            [2] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate8"):WaitForChild("AcceptBtns"):WaitForChild("Accept"),
+            [3] = workspace:WaitForChild("TradePlates"):WaitForChild("TradePlate8")
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Trade"):WaitForChild("TradeRE"):FireServer(unpack(args2))
+    end
+})
+
 OrionLib:Init()
