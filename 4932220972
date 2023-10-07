@@ -1,6 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Player = game.Players.LocalPlayer
-local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = true, ConfigFolder = "ScriptSlayers"})
+local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
 
 OrionLib:MakeNotification({
     Name = "You logged in!",
@@ -11,7 +11,7 @@ OrionLib:MakeNotification({
 
 local MainTab = Window:MakeTab({
     Name = "Main",
-    Icon = "rbxassetid://14828079730",
+    Icon = "rbxassetid://14848484384",
     PremiumOnly = false
 })
 
