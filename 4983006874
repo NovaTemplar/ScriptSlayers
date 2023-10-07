@@ -1,0 +1,100 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Player = game.Players.LocalPlayer
+local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = true, ConfigFolder = "ScriptSlayers"})
+
+OrionLib:MakeNotification({
+    Name = "You logged in!",
+    Content = "You logged in as "..Player.Name..".",
+    Image = "rbxassetid://14836421904",
+    Time = 5
+})
+
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://14828079730",
+    PremiumOnly = false
+})
+
+local Section = MainTab:AddSection({
+    Name = "Main Section"
+})
+
+-- Function for Click
+local function Click()
+    while true do
+        local Tool = Player.Character and Player.Character:FindFirstChildOfClass("Tool")
+        if Tool then
+            Tool:Activate()
+            Tool:Deactivate()
+        elseif Player.Character then
+            local BackTool = Player.Backpack:FindFirstChildOfClass("Tool")
+            if BackTool then
+                BackTool.Parent = Player.Character
+                wait(0.1)
+            end
+        end
+        wait() -- Adjust the wait time as needed
+    end
+end
+
+-- Function for Upgrade
+local function Upgrade()
+    local Upgrades = Player.PlayerGui.ScreenGui["UpgradeMenu_Frame"]["Upgrades_ScrollingFrame"]
+    while true do
+        for _, A_1 in ipairs(Upgrades:GetChildren()) do
+            if A_1:IsA("Frame") and A_1.Purchase_TxtBtn.Text ~= "MAX" then
+                firesignal(A_1.Purchase_TxtBtn.Activated)
+            end
+        end
+        wait(0.1) -- Adjust the wait time as needed
+    end
+end
+
+-- Function for Pet Evolve
+local function PetEvolve()
+    local PetGui = Player.PlayerGui.ScreenGui["Pet_Frame"]
+    while true do
+        if PetGui.Evolve_TxtBtn.Visible == true then
+            firesignal(PetGui.Evolve_TxtBtn.Activated)
+        end
+        for _, Btn in ipairs(PetGui.Quest_Frame:GetChildren()) do
+            if Btn:IsA("Frame") and Btn.Full_TxtBtn.Visible == false and Btn.MaxBar_Frame.CurrentBar_Frame.Size == UDim2.new(1, 0, 1, 0) then
+                firesignal(Btn.Feed_TxtBtn.Activated)
+            end
+        end
+        wait(0.1) -- Adjust the wait time as needed
+    end
+end
+
+-- Add the toggles from the first script here
+Section:AddToggle({
+    Name = "Click",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            Click()
+        end
+    end
+})
+
+Section:AddToggle({
+    Name = "Upgrade",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            Upgrade()
+        end
+    end
+})
+
+Section:AddToggle({
+    Name = "Pet Evolve",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            PetEvolve()
+        end
+    end
+})
+
+OrionLib:Init()
