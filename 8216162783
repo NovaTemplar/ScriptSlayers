@@ -1,0 +1,102 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Player = game.Players.LocalPlayer
+local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = true, ConfigFolder = "ScriptSlayers"})
+
+OrionLib:MakeNotification({
+    Name = "You logged in!",
+    Content = "You logged in as "..Player.Name..".",
+    Image = "rbxassetid://14836421904",
+    Time = 5
+})
+
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://14828079730",
+    PremiumOnly = false
+})
+
+local Section = MainTab:AddSection({
+    Name = "Main Section"
+})
+
+-- Function for Auto Buy
+local function AutoBuy()
+    while true do
+        if Section:GetToggleValue("Auto Buy") then
+            local args = {
+                [1] = "purchase",
+                [2] = 10001,
+                [3] = 1
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Coin"):WaitForChild("CoinMarketRE"):FireServer(unpack(args))
+        end
+        wait(1) -- Wait for 1 second before checking again
+    end
+end
+
+-- Function for Auto Fuse
+local function AutoFuse()
+    while true do
+        if Section:GetToggleValue("Auto Fuse") then
+            local args = {
+                [1] = {
+                    ["10001"] = 3
+                }
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("Functions"):WaitForChild("Fuse"):WaitForChild("FuseRF"):InvokeServer(unpack(args))
+        end
+        wait(1) -- Wait for 1 second before checking again
+    end
+end
+
+-- Function for Auto Sell
+local function AutoSell()
+    local itemIDs = {10042, 10041, 10069, 10063, 10065, 10064, 10066, 10068, 10051}
+    while true do
+        if Section:GetToggleValue("Auto Sell") then
+            for _, itemID in pairs(itemIDs) do
+                local args = {
+                    [1] = "sell",
+                    [2] = itemID,
+                    [3] = 1
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Coin"):WaitForChild("CoinMarketRE"):FireServer(unpack(args))
+                wait(1) -- Wait for 1 second before selling the next item
+            end
+        end
+        wait(1) -- Wait for 1 second before checking again
+    end
+end
+
+-- Add the toggles from the first script here
+Section:AddToggle({
+    Name = "Auto Buy",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            AutoBuy()
+        end
+    end
+})
+
+Section:AddToggle({
+    Name = "Auto Fuse",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            AutoFuse()
+        end
+    end
+})
+
+Section:AddToggle({
+    Name = "Auto Sell",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            AutoSell()
+        end
+    end
+})
+
+OrionLib:Init()
