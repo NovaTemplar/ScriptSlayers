@@ -42,7 +42,7 @@ local function AutoFuseFunction()
     while AutoFuse do
         local args = {
             [1] = {
-                ["10001"] = 3
+                ["10001"] = 4
             }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("Functions"):WaitForChild("Fuse"):WaitForChild("FuseRF"):InvokeServer(unpack(args))
