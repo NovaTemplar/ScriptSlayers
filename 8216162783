@@ -21,53 +21,34 @@ local Section = MainTab:AddSection({
 
 -- Function for Auto Buy
 local function AutoBuy()
-    while true do
-        if Section:GetToggleValue("Auto Buy") then
-            local args = {
-                [1] = "purchase",
-                [2] = 10001,
-                [3] = 1
-            }
-            game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Coin"):WaitForChild("CoinMarketRE"):FireServer(unpack(args))
-        end
-        wait(1) -- Wait for 1 second before checking again
-    end
+    local args = {
+        [1] = "purchase",
+        [2] = 10001,
+        [3] = 1
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Coin"):WaitForChild("CoinMarketRE"):FireServer(unpack(args))
 end
 
 -- Function for Auto Fuse
 local function AutoFuse()
-    while true do
-        if Section:GetToggleValue("Auto Fuse") then
-            local args = {
-                [1] = {
-                    ["10001"] = 3
-                }
-            }
-            game:GetService("ReplicatedStorage"):WaitForChild("Functions"):WaitForChild("Fuse"):WaitForChild("FuseRF"):InvokeServer(unpack(args))
-        end
-        wait(1) -- Wait for 1 second before checking again
-    end
+    local args = {
+        [1] = {
+            ["10001"] = 3
+        }
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("Functions"):WaitForChild("Fuse"):WaitForChild("FuseRF"):InvokeServer(unpack(args))
 end
-
--- Define a variable to track the state of Auto Sell
-local isAutoSellEnabled = false
 
 -- Function for Auto Sell
 local function AutoSell()
     local itemIDs = {10042, 10041, 10069, 10063, 10065, 10064, 10066, 10068, 10051}
-    while true do
-        if isAutoSellEnabled then
-            for _, itemID in pairs(itemIDs) do
-                local args = {
-                    [1] = "sell",
-                    [2] = itemID,
-                    [3] = 1
-                }
-                game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Coin"):WaitForChild("CoinMarketRE"):FireServer(unpack(args))
-                wait(1) -- Wait for 1 second before selling the next item
-            end
-        end
-        wait(1) -- Wait for 1 second before checking again
+    for _, itemID in ipairs(itemIDs) do
+        local args = {
+            [1] = "sell",
+            [2] = itemID,
+            [3] = 1
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Coin"):WaitForChild("CoinMarketRE"):FireServer(unpack(args))
     end
 end
 
@@ -77,7 +58,10 @@ Section:AddToggle({
     Default = false,
     Callback = function(Value)
         if Value then
-            AutoBuy()
+            while true do
+                AutoBuy()
+                wait(1) -- Wait for 1 second before running again
+            end
         end
     end
 })
@@ -87,7 +71,10 @@ Section:AddToggle({
     Default = false,
     Callback = function(Value)
         if Value then
-            AutoFuse()
+            while true do
+                AutoFuse()
+                wait(1) -- Wait for 1 second before running again
+            end
         end
     end
 })
@@ -96,7 +83,12 @@ Section:AddToggle({
     Name = "Auto Sell",
     Default = false,
     Callback = function(Value)
-        isAutoSellEnabled = Value -- Update the variable based on the toggle state
+        if Value then
+            while true do
+                AutoSell()
+                wait(1) -- Wait for 1 second before running again
+            end
+        end
     end
 })
 
