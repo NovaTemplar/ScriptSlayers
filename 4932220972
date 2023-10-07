@@ -7,127 +7,98 @@ OrionLib:MakeNotification({
     Content = "You logged in as "..Player.Name..".",
     Image = "rbxassetid://14836421904",
     Time = 5
-}) 
+})
 
 local MainTab = Window:MakeTab({
     Name = "Main",
     Icon = "rbxassetid://14828079730",
     PremiumOnly = false
-}) 
+})
 
 local Section = MainTab:AddSection({
     Name = "Main Section"
 })
 
-local VTab = Window:MakeTab({
-    Name = "Visual",
-    Icon = "rbxassetid://14836534175",
-    PremiumOnly = false
-})
+-- Initialize boolean variables for toggles
+local AutoBuy = false
+local AutoFuse = false
+local AutoSell = false
 
-local Section = VTab:AddSection({
-    Name = "Visual Section"
-})
-
-local OtherTab = Window:MakeTab({
-    Name = "Other's",
-    Icon = "rbxassetid://14828080427",
-    PremiumOnly = false
-})
-
-local Section = OtherTab:AddSection({
-    Name = "Others Section"
-})
-
-local AutoRob = false
-local Esp = false
-local RemoveKillParts = false  -- Added RemoveKillParts variable
-
-local function StartAutoRob()
-    while AutoRob do
-        pcall(function()
-            for _,v in pairs(workspace:GetDescendants()) do
-                if v:IsA("TouchTransmitter") then
-                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
-                end
-            end
-            for i,v in pairs(game.Workspace:GetDescendants()) do
-                if v.Name == "KillPart" or v.Name == "1" or v.Name == "2" or v.Name == "3" or v.Name == "Lasers" or v.Name == "Lazer" or v.Name == "Trip" or v.Name == "Spike" or v.Name == "DamageEr" or v.Name == "LaserFence" or v.Name == "Laser" or v.Name == "LaserFence2" or v.Name == "LaserWalls" or v.Name == "VaultProtection" or v.Name == "MovingLasers" or v.Name == "Lever" or v.Name == "MainSurface" or v.Name == "Distribute" then
-                    v:Destroy()
-                end
-            end
-        end)
-        wait(1) -- Adjust the wait time as needed
+-- Function for Auto Buy
+local function AutoBuyFunction()
+    while AutoBuy do
+        local args = {
+            [1] = "purchase",
+            [2] = 10001,
+            [3] = 1
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Coin"):WaitForChild("CoinMarketRE"):FireServer(unpack(args))
+        wait(1) -- Wait for 1 second before buying again
     end
 end
 
-local function ESPALL()
-    while Esp do
-        local players = game.Players:GetPlayers()
+-- Function for Auto Fuse
+local function AutoFuseFunction()
+    while AutoFuse do
+        local args = {
+            [1] = {
+                ["10001"] = 3
+            }
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Functions"):WaitForChild("Fuse"):WaitForChild("FuseRF"):InvokeServer(unpack(args))
+        wait(1) -- Wait for 1 second before fusing again
+    end
+end
 
-        for _, player in pairs(players) do
-            local highlight = Instance.new("Highlight")
-
-            highlight.Parent = player.Character
-
-            highlight.Adornee = player.Character
-
-            highlight.OutlineColor = Color3.new(1, 1, 1)
-
-            highlight.OutlineTransparency = 0
-            wait(1)
+-- Function for Auto Sell
+local function AutoSellFunction()
+    while AutoSell do
+        local itemIDs = {10042, 10041, 10069, 10063, 10065, 10064, 10066, 10068, 10051}
+        for _, itemID in ipairs(itemIDs) do
+            local args = {
+                [1] = "sell",
+                [2] = itemID,
+                [3] = 1
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Coin"):WaitForChild("CoinMarketRE"):FireServer(unpack(args))
+            wait(1) -- Wait for 1 second before selling the next item
         end
     end
 end
 
-local function RemoveKillPartsFunc()
-    while RemoveKillParts do
-        for i,v in pairs(game.Workspace:GetDescendants()) do
-            if v.Name == "KillPart" or v.Name == "1" or v.Name == "2" or v.Name == "3" or v.Name == "Lasers" or v.Name == "Lazer" or v.Name == "Trip" or v.Name == "Spike" or v.Name == "DamageEr" or v.Name == "LaserFence" or v.Name == "Laser" or v.Name == "LaserFence2" or v.Name == "LaserWalls" or v.Name == "VaultProtection" or v.Name == "MovingLasers" or v.Name == "Lever" or v.Name == "MainSurface" or v.Name == "Distribute" then
-                v:Destroy()
-            end
-        end
-    end
-end
-
-VTab:AddButton({
-    Name = "Bring Tool",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/NovaTemplar/ScriptSlayers/main/Tp"))()
-    end
-})
-
-OtherTab:AddButton({
-    Name = "Admin Cmd",
-    Callback = function()
-        loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
-    end
-})
-
-OtherTab:AddButton({
-    Name = "Exit",
-    Callback = function()
-        OrionLib:Destroy()
-    end
-})
-
-VTab:AddToggle({
-    Name = "Esp",
+-- Add the toggles for Auto Buy, Auto Fuse, and Auto Sell
+Section:AddToggle({
+    Name = "Auto Buy",
     Default = false,
     Callback = function(Value)
-        Esp = Value
-        if Esp then
-            ESPALL()
+        AutoBuy = Value -- Set AutoBuy to the value of the toggle
+        if AutoBuy then
+            -- If AutoBuy is enabled, start the AutoBuyFunction
+            AutoBuyFunction()
         end
-    end    
+    end
 })
 
-MainTab:AddButton({
-    Name = "AutoRob",
-    Callback = function()
-        AutoRob = not AutoRob -- Toggle AutoRob
-        if AutoRob then
-            StartAutoRob() -- Start AutoRob if enabled
+Section:AddToggle({
+    Name = "Auto Fuse",
+    Default = false,
+    Callback = function(Value)
+        AutoFuse = Value -- Set AutoFuse to the value of the toggle
+        if AutoFuse then
+            -- If AutoFuse is enabled, start the AutoFuseFunction
+            AutoFuseFunction()
+        end
+    end
+})
+
+Section:AddToggle({
+    Name = "Auto Sell",
+    Default = false,
+    Callback = function(Value)
+        AutoSell = Value -- Set AutoSell to the value of the toggle
+        if AutoSell then
+            -- If AutoSell is enabled, start the AutoSellFunction
+            AutoSellFunction()
         end
     end
 })
