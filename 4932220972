@@ -33,7 +33,7 @@ local function AutoBuyFunction()
             [3] = 1
         }
         game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Coin"):WaitForChild("CoinMarketRE"):FireServer(unpack(args))
-        wait(1) -- Wait for 1 second before buying again
+        wait(0.1) -- Wait for 1 second before buying again
     end
 end
 
@@ -46,7 +46,7 @@ local function AutoFuseFunction()
             }
         }
         game:GetService("ReplicatedStorage"):WaitForChild("Functions"):WaitForChild("Fuse"):WaitForChild("FuseRF"):InvokeServer(unpack(args))
-        wait(1) -- Wait for 1 second before fusing again
+        wait(0.1) -- Wait for 1 second before fusing again
     end
 end
 
@@ -61,7 +61,7 @@ local function AutoSellFunction()
                 [3] = 1
             }
             game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Coin"):WaitForChild("CoinMarketRE"):FireServer(unpack(args))
-            wait(1) -- Wait for 1 second before selling the next item
+            wait(0.1) -- Wait for 1 second before selling the next item
         end
     end
 end
