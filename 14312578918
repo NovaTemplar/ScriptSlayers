@@ -1,0 +1,69 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Player = game.Players.LocalPlayer
+local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = true, ConfigFolder = "ScriptSlayers"})
+
+OrionLib:MakeNotification({
+    Name = "You logged in!",
+    Content = "You logged in as "..Player.Name..".",
+    Image = "rbxassetid://14836421904",
+    Time = 5
+})
+
+local MainTab = Window:MakeTab({
+    Name = "Main",
+    Icon = "rbxassetid://14828079730",
+    PremiumOnly = false
+})
+
+local Section = MainTab:AddSection({
+    Name = "Main Section"
+})
+
+-- Add the toggles for Auto Buy, Auto Fuse, and Auto Sell
+local AutoEarnMoneyToggle
+
+-- Add a new section for Auto Upgrade
+local AutoUpgradeSection = MainTab:AddSection({
+    Name = "Auto Upgrade"
+})
+
+local AutoUpgradeMoneyToggle
+
+-- Add the "Auto Upgrade Money" toggle
+AutoUpgradeSection:AddToggle({
+    Name = "Auto Upgrade Money",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            while true do
+                local args = {
+                    [1] = "BPC"
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Upgrades"):FireServer(unpack(args))
+                wait(2) -- Wait for 2 seconds before running again
+            end
+        end
+    end
+})
+
+-- Add the "Auto Earn Money" toggle
+Section:AddToggle({
+    Name = "Auto Earn Money",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            AutoEarnMoneyToggle = true
+            while AutoEarnMoneyToggle do
+                local args = {
+                    [1] = 0
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Bux"):FireServer(unpack(args))
+                wait() -- Wait for a short amount of time, you can adjust this as needed
+            end
+        else
+            AutoEarnMoneyToggle = false
+        end
+    end
+})
+
+OrionLib:Init()
