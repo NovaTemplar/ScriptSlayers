@@ -213,7 +213,7 @@ Tab:AddSlider({
 BF = Value
 	end    
 })
-Tab:AddParagraph("How much car turn","I don't see changed")
+Tab:AddParagraph("Magic","Khodet try bezan hal nadaram begam")
 local MSA
 Tab:AddSlider({
 	Name = "MaxSteerAngle",
@@ -227,7 +227,7 @@ Tab:AddSlider({
 MSA = Value
 	end    
 })
-Tab:AddParagraph("The Button","After doing changes, click on it to mod the car your driving/seated")
+Tab:AddParagraph("The Button","Nad az foro kardan harchi khatsi, click kon ta mashin mod beshe")
 Tab:AddButton({
 	Name = "Mod!",
 	Callback = function()
@@ -277,7 +277,7 @@ time = Value
 	end    
 })
 
-Tab:AddParagraph("Time Trial","There is a kick if going under 20 seconds")
+Tab:AddParagraph("Time Trial","Zir 20s nemishe chon kick mide (bug mishe bazi vaght ha baraye security kiri)")
 Tab:AddButton({
 	Name = "Trigger Time Trial and teleport to Finish Line",
 	Callback = function()
@@ -314,7 +314,7 @@ end
   	end    
 })
 
-Tab:AddParagraph("Patches of game","You can only collect after it hit the floor/ground")
+Tab:AddParagraph("Madar Security","Bad inke drop resid zamin mishe var dashtesh (ro hava madar jende nemizare)")
 Tab:AddButton({
 	Name = "AirDrop",
 	Callback = function()
@@ -323,39 +323,5 @@ game:GetService("Workspace")[game.Players.LocalPlayer.Name].HumanoidRootPart.CFr
 wait()
 game:GetService("Workspace")[game.Players.LocalPlayer.Name].HumanoidRootPart.CFrame = old  	end    
 })
-
---[[
-Name = <string> - The name of the button.
-Callback = <function> - The function of the button.
-]]
-
-local Tab = Window:MakeTab({
-	Name = "Credits",
-	Icon = "rbxassetid://11921409629",
-	PremiumOnly = false
-})
-
-Tab:AddLabel("Scripts")
-Tab:AddParagraph("Me","Mod Cars, AutoFarm stuff, etc")
-Tab:AddLabel("Orion Library")
-Tab:AddParagraph("shlexware","On Github")
-
-local Tab = Window:MakeTab({
-	Name = "Changelog",
-	Icon = "rbxassetid://4834592491",
-	PremiumOnly = false
-})
-local Section = Tab:AddSection({
-	Name = "05/02/2023"
-})
-Tab:AddParagraph("Teleports","Added a teleport to finish line on Time Trial, Bring checkpoints of race and teleport to airdrop")
-
---[[
-Name = <string> - The name of the section.
-]]local Section = Tab:AddSection({
-	Name = "04/02/2023 DD/MM/YYYY"
-})
-Tab:AddParagraph("Its alive!","Started adding the autofarm and mod car.")--pain, took me over 8 hours to fix and test stuff, since i'm not an expert when working on UI Libs
-
 
 OrionLib:Init()
