@@ -87,10 +87,10 @@ end
 local Section = Tab:AddSection({
 	Name = "Cars"
 })
-Tab:AddLabel("And about this one?")
-Tab:AddParagraph("Its a checkbox(a loop)","It will complete 5 steps(of 6) and on the last it will place wheels(instead of using the same remote to skip building parts)")
-Tab:AddParagraph("Automation","To be able to make it don't get stuck, you will need to have this autofarm enabled with autosell")
-Tab:AddParagraph("Full Automation Problems","Since you need to have a supply, you can't supply and carry wheels at same time, so its impossible to do both at same time(unless someone fork and do a pull request to solve this :D)")
+Tab:AddLabel("Pass In KossSher Chie?")
+Tab:AddParagraph("In Madarjende Ye Checkbox Tekrar Hast","In 5 ta az 6 ta kar ke niaz hast dasti injam bedi ta mashin dar biad anjam mide shishomi baraye jelogiri az kick/lag dasti injam mide yani nemishe skip kard (Charkh haro var midare khodesh mizare)")
+Tab:AddParagraph("Automation","Bara inke kalash gir nakone, niaz dari yarege nazi Create Car va AutoSell o baham roshan koni")
+Tab:AddParagraph("Moshkel Tamom Automation","Ta vaghti "Ahan" va "Shishe" dari okeye, vali chon niaz hast baraye marhale akhar charkh var dare nemishe ham var dare ham stock por bokone (hamon gozashtan Ahan va....) niaz dari ya yek hamal payda koni biad por kone ya khodet har az gahi por koni")
 
 
 Tab:AddToggle({
