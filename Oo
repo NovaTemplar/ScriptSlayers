@@ -118,7 +118,7 @@ end
 	until getgenv().CC == false or getgenv().AutoSell == false
 	OrionLib:MakeNotification({
 		Name = "End of Vehicle Making!",
-		Content = "For a loop, enable autosell or read the text for the reason",
+		Content = "Baraye Automatic Bodan AutoSell Ro Roshan Konid!",
 		Image = "rbxassetid://4483345998",
 		Time = 10
 	})
@@ -133,8 +133,8 @@ local Section = Tab:AddSection({
 	Name = "Sell"
 })
 
-Tab:AddLabel("How this works?")
-Tab:AddParagraph("Another checkbox, another loop","It will sell with a random option, why random option? To sound be more like a human selling for the best price(you know, this is fake, there is no check for best price, its just a random option)(you can still get scammed!)")
+Tab:AddLabel("Chetori Kar mide in?")
+Tab:AddParagraph("Ye Checkbox Dige, Ye Tekrar Dige","In mashin haro barat be gheymat random mifroshe chon bishtar shabihe adam bashid ta bot (midoni? Aslan hosele nadashtam check bezaram ke khodesh yechi khob intekhab kone :P)(Mitoni hanozam scamm beshi xD)")
 
 Tab:AddToggle({
 	Name = "AutoSell",
@@ -169,8 +169,8 @@ local Tab = Window:MakeTab({
 local Section = Tab:AddSection({
 	Name = "Driveable Car Mods"
 })
-Tab:AddLabel("Exactly Change your car stats")
-Tab:AddParagraph("MaxSpeed","It being 100 doesn't mean car will not go over 100, this value is different from what game show as SPS")
+Tab:AddLabel("Stat Tokhmi Mashin Khod Ra Change Bedid :D")
+Tab:AddParagraph("MaxSpeed","Age zadi 100 in be in mani nist kamtar ya bishtar 100 nemire, In sorat az SPS e ke game neshon mide fargh mikone")
 
 local MS 
 Tab:AddSlider({
@@ -185,7 +185,7 @@ Tab:AddSlider({
 MS = Value 
 	end    
 })
-Tab:AddParagraph("Torque","You can climb walls if its higher enought, I think")
+Tab:AddParagraph("Torque","Mitoni az divar bala beri age boland tar bashe (70% mavaghe bug mishe vali bazam try bezan shayad sefid bodi)")
 local T
 Tab:AddSlider({
 	Name = "Torque",
@@ -199,7 +199,7 @@ Tab:AddSlider({
 T = Value
 	end    
 })
-Tab:AddParagraph("How good it brake","It needs to be negative to brake, if its positive it will 'accelerate'")
+Tab:AddParagraph("brake","In baraye tormoze mashine (Inam 60% mavaghe bug mishe yani kar nemide vali bazam try hezan shayad sefid bodi")
 local BF
 Tab:AddSlider({
 	Name = "Brake Force",
