@@ -90,7 +90,7 @@ local Section = Tab:AddSection({
 Tab:AddLabel("Pass In KossSher Chie?")
 Tab:AddParagraph("In Madarjende Ye Checkbox Tekrar Hast","In 5 ta az 6 ta kar ke niaz hast dasti injam bedi ta mashin dar biad anjam mide shishomi baraye jelogiri az kick/lag dasti injam mide yani nemishe skip kard (Charkh haro var midare khodesh mizare)")
 Tab:AddParagraph("Automation","Bara inke kalash gir nakone, niaz dari yarege nazi Create Car va AutoSell o baham roshan koni")
-Tab:AddParagraph("Moshkel Tamom Automation","Ta vaghti "Ahan" va "Shishe" dari okeye, vali chon niaz hast baraye marhale akhar charkh var dare nemishe ham var dare ham stock por bokone (hamon gozashtan Ahan va....) niaz dari ya yek hamal payda koni biad por kone ya khodet har az gahi por koni")
+Tab:AddParagraph("Moshkel Tamom Automation","Ta vaghti 'Ahan' va 'Shishe' dari okeye, vali chon niaz hast baraye marhale akhar charkh var dare nemishe ham var dare ham stock por bokone (hamon gozashtan Ahan va....) niaz dari ya yek hamal payda koni biad por kone ya khodet har az gahi por koni")
 
 
 Tab:AddToggle({
