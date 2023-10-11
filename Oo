@@ -1,7 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", Intro HidePremium = false, SaveConfig = false, ConfigFolder = "CFT"})
+local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", IntroText = "Kyro", HidePremium = false, SaveConfig = false, ConfigFolder = "ScriptSlayers"})
 
---[[Local Storage]]
 local Factory = tostring(game.Players.LocalPlayer.Team)
 local linha
 local PL
@@ -22,12 +21,12 @@ local Tab = Window:MakeTab({
 local Section = Tab:AddSection({
 	Name = "Fill"
 })
-Tab:AddLabel("What this do?")
-	Tab:AddParagraph("Fill","It grabs 'Metal' and 'Glass' from the pile and adds to every conveyor until the other part explained bellow")
-	Tab:AddParagraph("Requirements","Be able to carry 2 items at same time")
+Tab:AddLabel("In Che Samie?")
+	Tab:AddParagraph("Fill","In kore boz kari mikone khode 'Ahan' va 'Shishe' ro var dari va foro koni sare jash (Mishe az rash dor ham injam dad :P)")
+	Tab:AddParagraph("Niaz Ha","Niaz hast had aghal 2 ta ja inventory dashte bashi ke beshe 2 ta ham zaman var dasht (nadari? ishkal nadare bia bede behet pool bedam bekhari xD)")
 
-	Tab:AddLabel("Why this Slider?")
-	Tab:AddParagraph("Welcome to the Slider","This will be the number of your last conveyor, from 1 to 8(next game updates it probably will expand)")
+	Tab:AddLabel("Chera Slider?")
+	Tab:AddParagraph("Khosh Nayomadi Be Slider","In tedad on yare Conveyor hast, az 1 ta 8 support midim (Balad nisti dast nazan bache -_-)")
 
 Tab:AddSlider({
 	Name = "Last Conveyor",
@@ -45,7 +44,7 @@ Tab:AddSlider({
 	end    
 })
 local wor
-Tab:AddParagraph("How many workers do you have on last conveyor?","This is to prevent the bug of car getting stuck")
+Tab:AddParagraph("Chand Ta Kar gar afghani to yare conveyor dari?","In az amal karde hir kardan mashin ha (To Konet) jolo giri mikone :D")
 Tab:AddSlider({
 	Name = "Last Conveyor Workers",
 	Min = 0,
