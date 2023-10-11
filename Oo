@@ -1,5 +1,5 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Car Factory Tycoon", HidePremium = false, SaveConfig = false, ConfigFolder = "CFT"})
+local Window = OrionLib:MakeWindow({Name = "Kyro - By Nova", Intro HidePremium = false, SaveConfig = false, ConfigFolder = "CFT"})
 
 --[[Local Storage]]
 local Factory = tostring(game.Players.LocalPlayer.Team)
